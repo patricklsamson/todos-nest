@@ -8,10 +8,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SampleModule } from './sample/sample.module';
 import { TagEntity } from './models/tag/tag.entity';
 import { TodoEntity } from './models/todo/todo.entity';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), './db/schema.gql'),
+      debug: true,
+      playground: true
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({

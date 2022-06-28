@@ -1,0 +1,58 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type TodoEntity {
+  id: ID!
+  body: String!
+  done: Boolean!
+  tags: [TagEntity!]!
+}
+
+type TagEntity {
+  id: ID!
+  name: String!
+  todo: TodoEntity!
+}
+
+type Query {
+  tags: [TagEntity!]!
+  tag(id: Float!): TagEntity!
+  tagEnts: [TagEntity!]!
+  tagEnt(id: Float!): TagEntity!
+  todos: [TodoEntity!]!
+  todo(id: Float!): TodoEntity!
+  todoEnts: [TodoEntity!]!
+  todoEnt(id: Float!): TodoEntity!
+}
+
+type Mutation {
+  createTag(tag: TagInput!): TagEntity!
+  updateTag(tag: TagInput!): TagEntity!
+  removeAllTags: TagEntity!
+  removeOneTag(id: Float!): TagEntity!
+  createTagEnt(tag: TagInput!): TagEntity!
+  updateTagEnt(tag: TagInput!): TagEntity!
+  removeAllTagEnts: TagEntity!
+  removeOneTagEnt(id: Float!): TagEntity!
+  createTodo(todo: TodoInput!): TodoEntity!
+  updateTodo(todo: TodoInput!): TodoEntity!
+  removeAllTodos: TodoEntity!
+  removeOneTodo(id: Float!): TodoEntity!
+  createTodoEnt(todo: TodoInput!): TodoEntity!
+  updateTodoEnt(todo: TodoInput!): TodoEntity!
+  removeAllTodoEnts: TodoEntity!
+  removeOneTodoEnt(id: Float!): TodoEntity!
+}
+
+input TagInput {
+  id: ID!
+  name: String!
+  todo: TodoInput!
+}
+
+input TodoInput {
+  id: ID!
+  body: String
+  done: Boolean
+}

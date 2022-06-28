@@ -6,53 +6,56 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put
+  Put,
+  UseInterceptors
 } from '@nestjs/common';
-import { Tag } from '../models/tag/tag';
+import { TransformInterceptor } from '../interceptors/transform.interceptor';
+import { TagDto } from '../models/tag/tag.dto';
 import { TagService } from '../services/tag.service';
 
 @Controller('tags')
+@UseInterceptors(TransformInterceptor)
 export class TagController {
   constructor(private tagService: TagService) {}
 
   @Get()
-  findAll(): Promise<Tag[]> {
+  findAll(): TagDto[] {
     return this.tagService.findAll();
   }
 
-  @Get('dto')
-  findAllDtos(): Tag[] {
-    return this.tagService.findAllDtos();
+  @Get('ent')
+  findAllEnts(): Promise<TagDto[]> {
+    return this.tagService.findAllEnts();
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Tag> {
+  findOne(@Param('id', ParseIntPipe) id: number):TagDto {
     return this.tagService.findOne(id);
   }
 
-  @Get('dto/:id')
-  findOneDto(@Param('id', ParseIntPipe) id: number):Tag {
-    return this.tagService.findOneDto(id);
+  @Get('ent/:id')
+  findOneEnt(@Param('id', ParseIntPipe) id: number): Promise<TagDto> {
+    return this.tagService.findOneEnt(id);
   }
 
   @Post()
-  create(@Body() tag: Tag): Promise<Tag> {
+  create(@Body() tag: TagDto): TagDto {
     return this.tagService.create(tag);
   }
 
-  @Post('dto')
-  createDto(@Body() tag: Tag): Tag {
-    return this.tagService.createDto(tag);
+  @Post('ent')
+  createEnt(@Body() tag: TagDto): Promise<TagDto> {
+    return this.tagService.createEnt(tag);
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() tag: Tag): Promise<Tag> {
+  update(@Param('id', ParseIntPipe) id: number, @Body() tag: TagDto): TagDto {
     return this.tagService.update(id, tag);
   }
 
-  @Put('dto/:id')
-  updateDto(@Param('id', ParseIntPipe) id: number, @Body() tag: Tag): Tag {
-    return this.tagService.updateDto(id, tag);
+  @Put('ent/:id')
+  updateEnt(@Param('id', ParseIntPipe) id: number, @Body() tag: TagDto): Promise<TagDto> {
+    return this.tagService.updateEnt(id, tag);
   }
 
   @Delete()
@@ -60,13 +63,18 @@ export class TagController {
     this.tagService.removeAll();
   }
 
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): void {
-    this.tagService.remove(id);
+  @Delete()
+  removeAllEnts(): void {
+    this.tagService.removeAllEnts();
   }
 
-  @Delete('dto/:id')
+  @Delete(':id')
   removeDto(@Param('id', ParseIntPipe) id: number): void {
-    this.tagService.removeDto(id);
+    this.tagService.removeOne(id);
+  }
+
+  @Delete('ent/:id')
+  removeOneEnt(@Param('id', ParseIntPipe) id: number): void {
+    this.tagService.removeOneEnt(id);
   }
 }

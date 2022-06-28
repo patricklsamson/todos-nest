@@ -6,53 +6,56 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Put
+  Put,
+  UseInterceptors
 } from '@nestjs/common';
-import { Todo } from '../models/todo/todo';
+import { TransformInterceptor } from '../interceptors/transform.interceptor';
+import { TodoDto } from '../models/todo/todo.dto';
 import { TodoService } from '../services/todo.service';
 
 @Controller('todos')
+@UseInterceptors(TransformInterceptor)
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
   @Get()
-  findAll(): Promise<Todo[]> {
+  findAll(): TodoDto[] {
     return this.todoService.findAll();
   }
 
-  @Get('dto')
-  findAllDtos(): Todo[] {
-    return this.todoService.findAllDtos();
+  @Get('ent')
+  findAllEnts(): Promise<TodoDto[]> {
+    return this.todoService.findAllEnts();
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Todo> {
+  findOne(@Param('id', ParseIntPipe) id: number):TodoDto {
     return this.todoService.findOne(id);
   }
 
-  @Get('dto/:id')
-  findOneDto(@Param('id', ParseIntPipe) id: number):Todo {
-    return this.todoService.findOneDto(id);
+  @Get('ent/:id')
+  findOneEnt(@Param('id', ParseIntPipe) id: number): Promise<TodoDto> {
+    return this.todoService.findOneEnt(id);
   }
 
   @Post()
-  create(@Body() todo: Todo): Promise<Todo> {
+  create(@Body() todo: TodoDto): TodoDto {
     return this.todoService.create(todo);
   }
 
-  @Post('dto')
-  createDto(@Body() todo: Todo): Todo {
-    return this.todoService.createDto(todo);
+  @Post('ent')
+  createEnt(@Body() todo: TodoDto): Promise<TodoDto> {
+    return this.todoService.createEnt(todo);
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() todo: Todo): Promise<Todo> {
+  update(@Param('id', ParseIntPipe) id: number, @Body() todo: TodoDto): TodoDto {
     return this.todoService.update(id, todo);
   }
 
-  @Put('dto/:id')
-  updateDto(@Param('id', ParseIntPipe) id: number, @Body() todo: Todo): Todo {
-    return this.todoService.updateDto(id, todo);
+  @Put('ent/:id')
+  updateEnt(@Param('id', ParseIntPipe) id: number, @Body() todo: TodoDto): Promise<TodoDto> {
+    return this.todoService.updateEnt(id, todo);
   }
 
   @Delete()
@@ -60,13 +63,18 @@ export class TodoController {
     this.todoService.removeAll();
   }
 
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number): void {
-    this.todoService.remove(id);
+  @Delete('ent')
+  removeAllEnts(): void {
+    this.todoService.removeAllEnts();
   }
 
-  @Delete('dto/:id')
-  removeDto(@Param('id', ParseIntPipe) id: number): void {
-    this.todoService.removeDto(id);
+  @Delete(':id')
+  removeOne(@Param('id', ParseIntPipe) id: number): void {
+    this.todoService.removeOne(id);
+  }
+
+  @Delete('ent/:id')
+  removeOneEnt(@Param('id', ParseIntPipe) id: number): void {
+    this.todoService.removeOneEnt(id);
   }
 }

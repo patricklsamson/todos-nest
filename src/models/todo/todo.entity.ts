@@ -1,28 +1,34 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { TagEntity } from '../tag/tag.entity';
 
 @Entity()
+@ObjectType()
 export class TodoEntity {
   @PrimaryGeneratedColumn({
     type: 'bigint'
   })
+  @Field(() => ID)
   id: number;
 
   @Column({
     nullable: false,
     default: ''
   })
-  body: string;
+  @Field(() => String)
+  body?: string;
 
   @Column({
     nullable: false,
     default: false
   })
-  done: boolean;
+  @Field(() => Boolean)
+  done?: boolean;
 
   @OneToMany(
     () => TagEntity,
     tag => tag.todo
   )
-  tags: TagEntity[];
+  @Field(() => [TagEntity])
+  tags?: TagEntity[];
 }

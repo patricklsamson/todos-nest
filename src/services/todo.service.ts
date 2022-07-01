@@ -155,7 +155,7 @@ export class TodoService {
   }
 
   async removeOneTodoEnt(id: number): Promise<void> {
-    const todo = await this.todoRepository.findOne({
+    const todo: TodoEntity = await this.todoRepository.findOne({
       where: { id: id }
     });
 

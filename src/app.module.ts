@@ -1,16 +1,16 @@
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TagModule } from './modules/tag.module';
-import { TodoModule } from './modules/todo.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { SampleModule } from './sample/sample.module';
 import { TagEntity } from './models/tag/tag.entity';
 import { TodoEntity } from './models/todo/todo.entity';
-import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
+import { TagModule } from './modules/tag.module';
+import { TodoModule } from './modules/todo.module';
+import { SampleModule } from './sample/sample.module';
 
 @Module({
   imports: [

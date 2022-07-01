@@ -1,4 +1,4 @@
-import { Field, InputType, ID } from '@nestjs/graphql';
+import { Field, ID, InputType } from '@nestjs/graphql';
 import { TodoInput } from '../todo/todo.input';
 
 @InputType()
@@ -10,5 +10,5 @@ export class TagInput {
   name: string;
 
   @Field(() => TodoInput)
-  todo: TodoInput
+  todo: TodoInput;
 }

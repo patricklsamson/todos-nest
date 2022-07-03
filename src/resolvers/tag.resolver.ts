@@ -6,7 +6,7 @@ import { TagService } from '../services/tag.service';
 
 @Resolver(() => TagEntity)
 export class TagResolver {
-  constructor(private readonly tagService: TagService) {}
+  constructor(private tagService: TagService) {}
 
   @Query(() => [TagEntity], { name: 'tags' })
   findAllTags(): TagEntity[] {

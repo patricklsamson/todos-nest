@@ -6,7 +6,7 @@ import { TodoService } from '../services/todo.service';
 
 @Resolver(() => TodoEntity)
 export class TodoResolver {
-  constructor(private readonly todoService: TodoService) {}
+  constructor(private todoService: TodoService) {}
 
   @Query(() => [TodoEntity], { name: 'todos' })
   findAllTodos(): TodoEntity[] {

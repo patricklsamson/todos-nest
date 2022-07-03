@@ -50,7 +50,10 @@ export class TagService {
   }
 
   findOneTagEnt(id: number): Promise<TagEntity> {
-    return this.tagRepository.findOneBy({ id: id });
+    return this.tagRepository.findOne({
+      where: { id: id },
+      relations: ['todo']
+    });
   }
 
   create(tag: TagDto): TagDto {

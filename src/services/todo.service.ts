@@ -27,7 +27,7 @@ export class TodoService {
   }
 
   findAllTodoEnts(): Promise<TodoEntity[]> {
-    return this.todoRepository.find()
+    return this.todoRepository.find({ relations: ['tags'] })
   }
 
   findOne(id: number): TodoDto {
@@ -46,7 +46,10 @@ export class TodoService {
   }
 
   findOneTodoEnt(id: number): Promise<TodoEntity> {
-    return this.todoRepository.findOneBy({ id: id });
+    return this.todoRepository.findOne({
+      where: { id: id },
+      relations: ['tags']
+    });
   }
 
   create(todo: TodoDto): TodoDto {

@@ -47,8 +47,8 @@ type Mutation {
 
 input TagInput {
   id: ID!
-  name: String!
-  todo: TodoInput!
+  name: String
+  todo: TodoInput
 }
 
 input TodoInput {

@@ -27,5 +27,5 @@ export class TagEntity {
     }
   )
   @Field(() => TodoEntity)
-  todo: TodoEntity;
+  todo?: TodoEntity;
 }

@@ -10,5 +10,5 @@ export class TagDto {
   name: string;
 
   @IsNumber()
-  todo: TodoEntity
+  todo?: TodoEntity
 }

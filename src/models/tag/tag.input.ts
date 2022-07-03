@@ -6,9 +6,9 @@ export class TagInput {
   @Field(() => ID)
   id: number;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   name: string;
 
-  @Field(() => TodoInput)
-  todo: TodoInput;
+  @Field(() => TodoInput, { nullable: true })
+  todo?: TodoInput;
 }

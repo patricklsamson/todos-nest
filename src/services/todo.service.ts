@@ -27,7 +27,7 @@ export class TodoService {
   }
 
   findAllTodoEnts(): Promise<TodoEntity[]> {
-    return this.todoRepository.find({ relations: ['tags'] })
+    return this.todoRepository.find()
   }
 
   findOne(id: number): TodoDto {
@@ -46,10 +46,7 @@ export class TodoService {
   }
 
   findOneTodoEnt(id: number): Promise<TodoEntity> {
-    return this.todoRepository.findOne({
-      where: { id: id },
-      relations: ['tags']
-    });
+    return this.todoRepository.findOneBy({ id: id });
   }
 
   create(todo: TodoDto): TodoDto {
@@ -155,9 +152,7 @@ export class TodoService {
   }
 
   async removeOneTodoEnt(id: number): Promise<void> {
-    const todo: TodoEntity = await this.todoRepository.findOne({
-      where: { id: id }
-    });
+    const todo: TodoEntity = await this.todoRepository.findOneBy({ id: id });
 
     this.todoRepository.remove(todo);
   }

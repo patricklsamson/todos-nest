@@ -50,10 +50,7 @@ export class TagService {
   }
 
   findOneTagEnt(id: number): Promise<TagEntity> {
-    return this.tagRepository.findOne({
-      where: { id: id },
-      relations: ['todo']
-    });
+    return this.tagRepository.findOneBy({ id: id });
   }
 
   create(tag: TagDto): TagDto {
@@ -159,9 +156,7 @@ export class TagService {
   }
 
   async removeOneTagEnt(id: number): Promise<void> {
-    const tag: TagEntity = await this.tagRepository.findOne({
-      where: { id: id }
-    });
+    const tag: TagEntity = await this.tagRepository.findOneBy({ id: id });
 
     this.tagRepository.remove(tag);
   }

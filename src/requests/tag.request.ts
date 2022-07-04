@@ -3,8 +3,8 @@ import { TodoRequest } from './todo.request';
 
 @InputType()
 export class TagRequest {
-  @Field(() => ID)
-  id: number;
+  @Field(() => ID, { nullable: true })
+  id?: number;
 
   @Field(() => String)
   name: string;

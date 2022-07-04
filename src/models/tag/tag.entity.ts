@@ -11,10 +11,7 @@ export class TagEntity {
   @Field(() => ID)
   id: number;
 
-  @Column({
-    nullable: false,
-    default: ''
-  })
+  @Column()
   @Field(() => String)
   name: string;
 

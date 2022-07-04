@@ -11,17 +11,11 @@ export class TodoEntity {
   @Field(() => ID)
   id: number;
 
-  @Column({
-    nullable: false,
-    default: ''
-  })
+  @Column()
   @Field(() => String)
   body?: string;
 
-  @Column({
-    nullable: false,
-    default: false
-  })
+  @Column()
   @Field(() => Boolean)
   done?: boolean;
 

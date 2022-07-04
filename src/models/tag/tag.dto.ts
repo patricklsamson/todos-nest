@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 import { TodoEntity } from '../todo/todo.entity';
 
 export class TagDto {
@@ -6,7 +6,6 @@ export class TagDto {
   id: number;
 
   @IsString()
-  @IsNotEmpty()
   name: string;
 
   @IsNumber()

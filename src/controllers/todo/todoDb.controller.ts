@@ -10,7 +10,7 @@ import {
   UseInterceptors
 } from '@nestjs/common';
 import { TransformInterceptor } from '../../interceptors/transform.interceptor';
-import { TodoDto } from '../../models/todo/todo.dto';
+import { Todo } from '../../models/todo.entity';
 import { TodoDbService } from '../../services/todo/todoDb.service';
 
 @Controller('todos')
@@ -19,22 +19,22 @@ export class TodoDbController {
   constructor(private todoService: TodoDbService) {}
 
   @Get('db')
-  findAll(): Promise<TodoDto[]> {
+  findAll(): Promise<Todo[]> {
     return this.todoService.findAll();
   }
 
   @Get('db/:id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<TodoDto> {
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<Todo> {
     return this.todoService.findOne(id);
   }
 
   @Post('db')
-  create(@Body() todo: TodoDto): Promise<TodoDto> {
+  create(@Body() todo: Todo): Promise<Todo> {
     return this.todoService.create(todo);
   }
 
   @Put('db/:id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() todo: TodoDto): Promise<TodoDto> {
+  update(@Param('id', ParseIntPipe) id: number, @Body() todo: Todo): Promise<Todo> {
     return this.todoService.update(id, todo);
   }
 

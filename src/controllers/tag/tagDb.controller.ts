@@ -10,7 +10,7 @@ import {
   UseInterceptors
 } from '@nestjs/common';
 import { TransformInterceptor } from '../../interceptors/transform.interceptor';
-import { TagDto } from '../../models/tag/tag.dto';
+import { Tag } from '../../models/tag.entity';
 import { TagDbService } from '../../services/tag/tagDb.service';
 
 @Controller('tags')
@@ -19,22 +19,22 @@ export class TagDbController {
   constructor(private tagService: TagDbService) {}
 
   @Get('db')
-  findAll(): Promise<TagDto[]> {
+  findAll(): Promise<Tag[]> {
     return this.tagService.findAll();
   }
 
   @Get('db/:id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<TagDto> {
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<Tag> {
     return this.tagService.findOne(id);
   }
 
   @Post('db')
-  create(@Body() tag: TagDto): Promise<TagDto> {
+  create(@Body() tag: Tag): Promise<Tag> {
     return this.tagService.create(tag);
   }
 
   @Put('db/:id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() tag: TagDto): Promise<TagDto> {
+  update(@Param('id', ParseIntPipe) id: number, @Body() tag: Tag): Promise<Tag> {
     return this.tagService.update(id, tag);
   }
 

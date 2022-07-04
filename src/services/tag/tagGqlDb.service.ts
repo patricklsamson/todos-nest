@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { TagEntity } from '../../models/tag/tag.entity';
+import { Tag } from '../../models/tag.entity';
 import { TagRequest } from '../../requests/tag.request';
 import { RepositoryService } from '../repository.service';
 
@@ -7,26 +7,26 @@ import { RepositoryService } from '../repository.service';
 export class TagGqlDbService {
   constructor(private repositoryService: RepositoryService) {}
 
-  findAllTags(): Promise<TagEntity[]> {
+  findAllTags(): Promise<Tag[]> {
     return this.repositoryService.tagRepository.find({
       relations: ['todo']
     });
   }
 
-  findOneTag(id: number): Promise<TagEntity> {
+  findOneTag(id: number): Promise<Tag> {
     return this.repositoryService.tagRepository.findOne({
       where: { id: id },
       relations: ['todo']
     });
   }
 
-  createTag(tag: TagRequest): Promise<TagEntity> {
+  createTag(tag: TagRequest): Promise<Tag> {
     const newTag: TagRequest = this.repositoryService.tagRepository.create(tag);
 
     return this.repositoryService.tagRepository.save(newTag);
   }
 
-  async updateTag(id: number, tag: TagRequest): Promise<TagEntity> {
+  async updateTag(id: number, tag: TagRequest): Promise<Tag> {
     await this.repositoryService.tagRepository.preload({
       id: id,
       ...tag
@@ -36,13 +36,13 @@ export class TagGqlDbService {
   }
 
   async removeAllTags(): Promise<void> {
-    const tags: TagEntity[] = await this.repositoryService.tagRepository.find();
+    const tags: Tag[] = await this.repositoryService.tagRepository.find();
 
     tags.forEach(tag => this.repositoryService.tagRepository.delete(tag.id));
   }
 
   async removeOneTag(id: number): Promise<void> {
-    const tag: TagEntity = await this.repositoryService.tagRepository.findOneBy({ id: id });
+    const tag: Tag = await this.repositoryService.tagRepository.findOneBy({ id: id });
 
     this.repositoryService.tagRepository.remove(tag);
   }

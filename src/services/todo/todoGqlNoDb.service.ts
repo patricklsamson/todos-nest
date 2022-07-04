@@ -1,18 +1,18 @@
-import { TodoEntity } from '../../models/todo/todo.entity';
+import { Todo } from '../../models/todo.entity';
 import { TodoRequest } from '../../requests/todo.request';
 
 export class TodoGqlNoDbService {
-  public todos: TodoEntity[] = [];
+  public todos: Todo[] = [];
 
-  findAllTodos(): TodoEntity[] {
+  findAllTodos(): Todo[] {
     return this.todos;
   }
 
-  findOneTodo(id: number): TodoEntity {
+  findOneTodo(id: number): Todo {
     return this.todos.find(todo => todo.id === id);
   }
 
-  createTodo(todo: TodoRequest): TodoEntity {
+  createTodo(todo: TodoRequest): Todo {
     this.todos = [
       ...this.todos,
       { id: this.todos.length + 1, ...todo }
@@ -21,7 +21,7 @@ export class TodoGqlNoDbService {
     return todo;
   }
 
-  updateTodo(todoEntry: TodoRequest): TodoEntity|any {
+  updateTodo(todoEntry: TodoRequest): Todo|any {
     this.todos = this.todos.map(todo => {
       if (todo.id === todoEntry.id) {
         return { ...todoEntry };

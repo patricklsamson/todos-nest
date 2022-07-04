@@ -1,18 +1,18 @@
-import { TagEntity } from "../../models/tag/tag.entity";
+import { Tag } from "../../models/tag.entity";
 import { TagRequest } from "../../requests/tag.request";
 
 export class TagGqlNoDbService {
-  public tags: TagEntity[] = [];
+  public tags: Tag[] = [];
 
-  findAllTags(): TagEntity[] {
+  findAllTags(): Tag[] {
     return this.tags;
   }
 
-  findOneTag(id: number): TagEntity {
+  findOneTag(id: number): Tag {
     return this.tags.find(tag => tag.id === id);
   }
 
-  createTag(tag: TagRequest): TagEntity {
+  createTag(tag: TagRequest): Tag {
     this.tags = [
       ...this.tags,
       { id: this.tags.length + 1, ...tag }
@@ -21,7 +21,7 @@ export class TagGqlNoDbService {
     return tag;
   }
 
-  updateTag(tagEntry: TagRequest): TagEntity|any {
+  updateTag(tagEntry: TagRequest): Tag|any {
     this.tags = this.tags.map(tag => {
       if (tag.id === tagEntry.id) {
         return { ...tagEntry };

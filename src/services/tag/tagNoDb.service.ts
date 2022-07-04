@@ -1,17 +1,17 @@
-import { TagDto } from "../../models/tag/tag.dto";
+import { Tag } from "../../models/tag.entity";
 
 export class TagNoDbService {
-  public tags: TagDto[] = [];
+  public tags: Tag[] = [];
 
-  findAll(): TagDto[] {
+  findAll(): Tag[] {
     return this.tags;
   }
 
-  findOne(id: number): TagDto {
+  findOne(id: number): Tag {
     return this.tags.find(tag => tag.id === id);
   }
 
-  create(tag: TagDto): TagDto {
+  create(tag: Tag): Tag {
     this.tags = [
       ...this.tags,
       { id: this.tags.length + 1, ...tag }
@@ -20,10 +20,10 @@ export class TagNoDbService {
     return tag;
   }
 
-  update(id: number, tag: TagDto): TagDto {
+  update(id: number, tag: Tag): Tag {
     const index: number = this.tags.findIndex(tag => tag.id === id);
 
-    const updateTag: TagDto = {
+    const updateTag: Tag = {
       ...tag,
       id
     };

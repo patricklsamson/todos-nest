@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { TodoDto } from '../../models/todo/todo.dto';
+import { Todo } from '../../models/todo.entity';
 
 @Injectable()
 export class TodoNoDbService {
-  public todos: TodoDto[] = [];
+  public todos: Todo[] = [];
 
-  findAll(): TodoDto[] {
+  findAll(): Todo[] {
     return this.todos;
   }
 
-  findOne(id: number): TodoDto {
+  findOne(id: number): Todo {
     return this.todos.find(todo => todo.id === id);
   }
 
-  create(todo: TodoDto): TodoDto {
+  create(todo: Todo): Todo {
     this.todos = [
       ...this.todos,
       { id: this.todos.length + 1, ...todo }
@@ -22,10 +22,10 @@ export class TodoNoDbService {
     return todo;
   }
 
-  update(id: number, todo: TodoDto): TodoDto {
+  update(id: number, todo: Todo): Todo {
     const index: number = this.todos.findIndex(todo => todo.id === id);
 
-    const updateTodo: TodoDto = {
+    const updateTodo: Todo = {
       ...todo,
       id
     };

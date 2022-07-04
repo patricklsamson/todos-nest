@@ -3,16 +3,16 @@
 # ------------------------------------------------------
 
 type Todo {
-  id: ID!
-  body: String!
-  done: Boolean!
-  tags: [Tag!]!
+  id: ID
+  body: String
+  done: Boolean
+  tags: [Tag!]
 }
 
 type Tag {
-  id: ID!
+  id: ID
   name: String!
-  todo: Todo!
+  todo: Todo
 }
 
 type Query {
@@ -32,7 +32,7 @@ type Mutation {
   removeAllDbTags: Tag!
   removeOneDbTag(id: Float!): Tag!
   createTag(tag: TagRequest!): Tag!
-  updateTag(tag: TagRequest!): Tag!
+  updateTag(id: Float!, tag: TagRequest!): Tag!
   removeAllTags: Tag!
   removeOneTag(id: Float!): Tag!
   createDbTodo(todo: TodoRequest!): Todo!
@@ -40,7 +40,7 @@ type Mutation {
   removeAllDbTodos: Todo!
   removeOneDbTodo(id: Float!): Todo!
   createTodo(todo: TodoRequest!): Todo!
-  updateTodo(todo: TodoRequest!): Todo!
+  updateTodo(id: Float!, todo: TodoRequest!): Todo!
   removeAllTodos: Todo!
   removeOneTodo(id: Float!): Todo!
 }
@@ -48,11 +48,11 @@ type Mutation {
 input TagRequest {
   id: ID
   name: String!
-  todo: TodoRequest!
+  todo: TodoRequest
 }
 
 input TodoRequest {
   id: ID
-  body: String!
-  done: Boolean!
+  body: String
+  done: Boolean
 }

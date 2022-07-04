@@ -8,7 +8,7 @@ import { Todo } from './todo.entity';
 export class Tag {
   @PrimaryGeneratedColumn()
   @IsNumber()
-  @Field(() => ID)
+  @Field(() => ID, { nullable: true })
   id?: number;
 
   @Column()
@@ -25,6 +25,6 @@ export class Tag {
     }
   )
   @IsNumber()
-  @Field(() => Todo)
+  @Field(() => Todo, { nullable: true })
   todo?: Todo;
 }

@@ -8,17 +8,17 @@ import { Tag } from './tag.entity';
 export class Todo {
   @PrimaryGeneratedColumn()
   @IsNumber()
-  @Field(() => ID)
+  @Field(() => ID, { nullable: true })
   id?: number;
 
   @Column()
   @IsString()
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   body?: string;
 
   @Column()
   @IsBoolean()
-  @Field(() => Boolean)
+  @Field(() => Boolean, { nullable: true })
   done?: boolean;
 
   @OneToMany(
@@ -26,6 +26,6 @@ export class Todo {
     tag => tag.todo
   )
   @IsNumber()
-  @Field(() => [Tag])
+  @Field(() => [Tag], { nullable: true })
   tags?: Tag[];
 }

@@ -1,39 +1,39 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { TodoEntity } from '../../models/todo/todo.entity';
+import { Todo } from '../../models/todo.entity';
 import { TodoRequest } from '../../requests/todo.request';
 import { TodoGqlDbService } from '../../services/todo/todoGqlDb.service';
 
-@Resolver(() => TodoEntity)
+@Resolver(() => Todo)
 export class TodoDbResolver {
   constructor(private todoService: TodoGqlDbService) {}
 
-  @Query(() => [TodoEntity], { name: 'dbTodos' })
-  findAllDbTodos(): Promise<TodoEntity[]> {
+  @Query(() => [Todo], { name: 'dbTodos' })
+  findAllDbTodos(): Promise<Todo[]> {
     return this.todoService.findAllTodos();
   }
 
-  @Query(() => TodoEntity, { name: 'dbTodo' })
-  findOneDbTodo(@Args('id', ParseIntPipe) id: number): Promise<TodoEntity> {
+  @Query(() => Todo, { name: 'dbTodo' })
+  findOneDbTodo(@Args('id', ParseIntPipe) id: number): Promise<Todo> {
     return this.todoService.findOneTodo(id);
   }
 
-  @Mutation(() => TodoEntity)
-  createDbTodo(@Args('todo') todo: TodoRequest): Promise<TodoEntity> {
+  @Mutation(() => Todo)
+  createDbTodo(@Args('todo') todo: TodoRequest): Promise<Todo> {
     return this.todoService.createTodo(todo);
   }
 
-  @Mutation(() => TodoEntity)
-  updateDbTodo(@Args('todo') todo: TodoRequest): Promise<TodoEntity> {
+  @Mutation(() => Todo)
+  updateDbTodo(@Args('todo') todo: TodoRequest): Promise<Todo> {
     return this.todoService.updateTodo(todo.id, todo);
   }
 
-  @Mutation(() => TodoEntity)
+  @Mutation(() => Todo)
   removeAllDbTodos(): Promise<void> {
     return this.todoService.removeAllTodos();
   }
 
-  @Mutation(() => TodoEntity)
+  @Mutation(() => Todo)
   removeOneDbTodo(@Args('id', ParseIntPipe) id: number): Promise<void> {
     return this.todoService.removeOneTodo(id);
   }

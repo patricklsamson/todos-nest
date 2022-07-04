@@ -1,39 +1,39 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { TodoEntity } from '../../models/todo/todo.entity';
+import { Todo } from '../../models/todo.entity';
 import { TodoRequest } from '../../requests/todo.request';
 import { TodoGqlNoDbService } from '../../services/todo/todoGqlNoDb.service';
 
-@Resolver(() => TodoEntity)
+@Resolver(() => Todo)
 export class TodoNoDbResolver {
   constructor(private todoService: TodoGqlNoDbService) {}
 
-  @Query(() => [TodoEntity], { name: 'todos' })
-  findAllTodos(): TodoEntity[] {
+  @Query(() => [Todo], { name: 'todos' })
+  findAllTodos(): Todo[] {
     return this.todoService.findAllTodos();
   }
 
-  @Query(() => TodoEntity, { name: 'todo' })
-  findOneTodo(@Args('id', ParseIntPipe) id: number): TodoEntity {
+  @Query(() => Todo, { name: 'todo' })
+  findOneTodo(@Args('id', ParseIntPipe) id: number): Todo {
     return this.todoService.findOneTodo(id);
   }
 
-  @Mutation(() => TodoEntity)
-  createTodo(@Args('todo') todo: TodoRequest): TodoEntity {
+  @Mutation(() => Todo)
+  createTodo(@Args('todo') todo: TodoRequest): Todo {
     return this.todoService.createTodo(todo);
   }
 
-  @Mutation(() => TodoEntity)
-  updateTodo(@Args('todo') todo: TodoRequest): TodoEntity {
+  @Mutation(() => Todo)
+  updateTodo(@Args('todo') todo: TodoRequest): Todo {
     return this.todoService.updateTodo(todo);
   }
 
-  @Mutation(() => TodoEntity)
+  @Mutation(() => Todo)
   removeAllTodos(): void {
     return this.todoService.removeAllTodos();
   }
 
-  @Mutation(() => TodoEntity)
+  @Mutation(() => Todo)
   removeOneTodo(@Args('id', ParseIntPipe) id: number): void {
     return this.todoService.removeOneTodo(id);
   }

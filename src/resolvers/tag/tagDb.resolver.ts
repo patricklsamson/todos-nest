@@ -1,39 +1,39 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { TagEntity } from "../../models/tag/tag.entity";
+import { Tag } from "../../models/tag.entity";
 import { TagRequest } from '../../requests/tag.request';
 import { TagGqlDbService } from '../../services/tag/tagGqlDb.service';
 
-@Resolver(() => TagEntity)
+@Resolver(() => Tag)
 export class TagDbResolver {
   constructor(private tagService: TagGqlDbService) {}
 
-  @Query(() => [TagEntity], { name: 'dbTags' })
-  findAllDbTags(): Promise<TagEntity[]> {
+  @Query(() => [Tag], { name: 'dbTags' })
+  findAllDbTags(): Promise<Tag[]> {
     return this.tagService.findAllTags();
   }
 
-  @Query(() => TagEntity, { name: 'dbTag' })
-  findOneDbTag(@Args('id', ParseIntPipe) id: number): Promise<TagEntity> {
+  @Query(() => Tag, { name: 'dbTag' })
+  findOneDbTag(@Args('id', ParseIntPipe) id: number): Promise<Tag> {
     return this.tagService.findOneTag(id);
   }
 
-  @Mutation(() => TagEntity)
-  createDbTag(@Args('tag') tag: TagRequest): Promise<TagEntity> {
+  @Mutation(() => Tag)
+  createDbTag(@Args('tag') tag: TagRequest): Promise<Tag> {
     return this.tagService.createTag(tag);
   }
 
-  @Mutation(() => TagEntity)
-  updateDbTag(@Args('tag') tag: TagRequest): Promise<TagEntity> {
+  @Mutation(() => Tag)
+  updateDbTag(@Args('tag') tag: TagRequest): Promise<Tag> {
     return this.tagService.updateTag(tag.id, tag);
   }
 
-  @Mutation(() => TagEntity)
+  @Mutation(() => Tag)
   removeAllDbTags(): Promise<void> {
     return this.tagService.removeAllTags();
   }
 
-  @Mutation(() => TagEntity)
+  @Mutation(() => Tag)
   removeOneDbTag(@Args('id', ParseIntPipe) id: number): Promise<void> {
     return this.tagService.removeOneTag(id);
   }

@@ -6,11 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TagEntity } from './models/tag/tag.entity';
-import { TodoEntity } from './models/todo/todo.entity';
-import { TagModule } from './modules/tag.module';
-import { TodoModule } from './modules/todo.module';
-import { SampleModule } from './sample/sample.module';
+import entities from './models/index.entity';
+import modules from './modules/index.module';
+// import { SampleModule } from './sample/sample.module';
 
 @Module({
   imports: [
@@ -30,14 +28,13 @@ import { SampleModule } from './sample/sample.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [TagEntity, TodoEntity],
+        entities: entities,
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
-    TagModule,
-    TodoModule,
-    SampleModule
+    ...modules,
+    // SampleModule
   ],
   controllers: [AppController],
   providers: [AppService],

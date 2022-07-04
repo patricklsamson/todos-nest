@@ -24,8 +24,8 @@ export class TagNoDbResolver {
   }
 
   @Mutation(() => Tag)
-  updateTag(@Args('tag') tag: TagRequest): Tag {
-    return this.tagService.updateTag(tag);
+  updateTag(@Args('id', ParseIntPipe) id: number, @Args('tag') tag: TagRequest): Tag {
+    return this.tagService.updateTag(id, tag);
   }
 
   @Mutation(() => Tag)

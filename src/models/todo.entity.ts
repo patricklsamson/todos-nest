@@ -1,28 +1,31 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { IsBoolean, IsNumber, IsString } from 'class-validator';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { TagEntity } from '../tag/tag.entity';
+import { Tag } from './tag.entity';
 
 @Entity()
 @ObjectType()
-export class TodoEntity {
-  @PrimaryGeneratedColumn({
-    type: 'bigint'
-  })
+export class Todo {
+  @PrimaryGeneratedColumn()
+  @IsNumber()
   @Field(() => ID)
-  id: number;
+  id?: number;
 
   @Column()
+  @IsString()
   @Field(() => String)
   body?: string;
 
   @Column()
+  @IsBoolean()
   @Field(() => Boolean)
   done?: boolean;
 
   @OneToMany(
-    () => TagEntity,
+    () => Tag,
     tag => tag.todo
   )
-  @Field(() => [TagEntity])
-  tags?: TagEntity[];
+  @IsNumber()
+  @Field(() => [Tag])
+  tags?: Tag[];
 }

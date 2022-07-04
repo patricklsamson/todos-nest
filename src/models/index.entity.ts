@@ -1,6 +1,6 @@
-import { TagEntity } from "./tag/tag.entity";
-import { TodoEntity } from "./todo/todo.entity";
+import { Tag } from "./tag.entity";
+import { Todo } from "./todo.entity";
 
-const entities: any[] = [TagEntity, TodoEntity];
+const entities: any[] = [Tag, Todo];
 
 export default entities;

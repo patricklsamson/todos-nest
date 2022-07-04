@@ -2,57 +2,57 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type TodoEntity {
+type Todo {
   id: ID!
   body: String!
   done: Boolean!
-  tags: [TagEntity!]!
+  tags: [Tag!]!
 }
 
-type TagEntity {
+type Tag {
   id: ID!
   name: String!
-  todo: TodoEntity!
+  todo: Todo!
 }
 
 type Query {
-  dbTags: [TagEntity!]!
-  dbTag(id: Float!): TagEntity!
-  tags: [TagEntity!]!
-  tag(id: Float!): TagEntity!
-  dbTodos: [TodoEntity!]!
-  dbTodo(id: Float!): TodoEntity!
-  todos: [TodoEntity!]!
-  todo(id: Float!): TodoEntity!
+  dbTags: [Tag!]!
+  dbTag(id: Float!): Tag!
+  tags: [Tag!]!
+  tag(id: Float!): Tag!
+  dbTodos: [Todo!]!
+  dbTodo(id: Float!): Todo!
+  todos: [Todo!]!
+  todo(id: Float!): Todo!
 }
 
 type Mutation {
-  createDbTag(tag: TagRequest!): TagEntity!
-  updateDbTag(tag: TagRequest!): TagEntity!
-  removeAllDbTags: TagEntity!
-  removeOneDbTag(id: Float!): TagEntity!
-  createTag(tag: TagRequest!): TagEntity!
-  updateTag(tag: TagRequest!): TagEntity!
-  removeAllTags: TagEntity!
-  removeOneTag(id: Float!): TagEntity!
-  createDbTodo(todo: TodoRequest!): TodoEntity!
-  updateDbTodo(todo: TodoRequest!): TodoEntity!
-  removeAllDbTodos: TodoEntity!
-  removeOneDbTodo(id: Float!): TodoEntity!
-  createTodo(todo: TodoRequest!): TodoEntity!
-  updateTodo(todo: TodoRequest!): TodoEntity!
-  removeAllTodos: TodoEntity!
-  removeOneTodo(id: Float!): TodoEntity!
+  createDbTag(tag: TagRequest!): Tag!
+  updateDbTag(tag: TagRequest!): Tag!
+  removeAllDbTags: Tag!
+  removeOneDbTag(id: Float!): Tag!
+  createTag(tag: TagRequest!): Tag!
+  updateTag(tag: TagRequest!): Tag!
+  removeAllTags: Tag!
+  removeOneTag(id: Float!): Tag!
+  createDbTodo(todo: TodoRequest!): Todo!
+  updateDbTodo(todo: TodoRequest!): Todo!
+  removeAllDbTodos: Todo!
+  removeOneDbTodo(id: Float!): Todo!
+  createTodo(todo: TodoRequest!): Todo!
+  updateTodo(todo: TodoRequest!): Todo!
+  removeAllTodos: Todo!
+  removeOneTodo(id: Float!): Todo!
 }
 
 input TagRequest {
-  id: ID!
+  id: ID
   name: String!
   todo: TodoRequest!
 }
 
 input TodoRequest {
-  id: ID!
+  id: ID
   body: String!
   done: Boolean!
 }

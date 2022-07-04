@@ -16,43 +16,43 @@ type TagEntity {
 }
 
 type Query {
+  dbTags: [TagEntity!]!
+  dbTag(id: Float!): TagEntity!
   tags: [TagEntity!]!
   tag(id: Float!): TagEntity!
-  tagEnts: [TagEntity!]!
-  tagEnt(id: Float!): TagEntity!
+  dbTodos: [TodoEntity!]!
+  dbTodo(id: Float!): TodoEntity!
   todos: [TodoEntity!]!
   todo(id: Float!): TodoEntity!
-  todoEnts: [TodoEntity!]!
-  todoEnt(id: Float!): TodoEntity!
 }
 
 type Mutation {
-  createTag(tag: TagInput!): TagEntity!
-  updateTag(tag: TagInput!): TagEntity!
+  createDbTag(tag: TagRequest!): TagEntity!
+  updateDbTag(tag: TagRequest!): TagEntity!
+  removeAllDbTags: TagEntity!
+  removeOneDbTag(id: Float!): TagEntity!
+  createTag(tag: TagRequest!): TagEntity!
+  updateTag(tag: TagRequest!): TagEntity!
   removeAllTags: TagEntity!
   removeOneTag(id: Float!): TagEntity!
-  createTagEnt(tag: TagInput!): TagEntity!
-  updateTagEnt(tag: TagInput!): TagEntity!
-  removeAllTagEnts: TagEntity!
-  removeOneTagEnt(id: Float!): TagEntity!
-  createTodo(todo: TodoInput!): TodoEntity!
-  updateTodo(todo: TodoInput!): TodoEntity!
+  createDbTodo(todo: TodoRequest!): TodoEntity!
+  updateDbTodo(todo: TodoRequest!): TodoEntity!
+  removeAllDbTodos: TodoEntity!
+  removeOneDbTodo(id: Float!): TodoEntity!
+  createTodo(todo: TodoRequest!): TodoEntity!
+  updateTodo(todo: TodoRequest!): TodoEntity!
   removeAllTodos: TodoEntity!
   removeOneTodo(id: Float!): TodoEntity!
-  createTodoEnt(todo: TodoInput!): TodoEntity!
-  updateTodoEnt(todo: TodoInput!): TodoEntity!
-  removeAllTodoEnts: TodoEntity!
-  removeOneTodoEnt(id: Float!): TodoEntity!
 }
 
-input TagInput {
+input TagRequest {
   id: ID!
-  name: String
-  todo: TodoInput
+  name: String!
+  todo: TodoRequest!
 }
 
-input TodoInput {
+input TodoRequest {
   id: ID!
-  body: String
-  done: Boolean
+  body: String!
+  done: Boolean!
 }

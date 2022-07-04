@@ -25,12 +25,9 @@ export class TodoGqlDbService {
   }
 
   async updateTodo(id: number, todo: TodoRequest): Promise<Todo> {
-    await this.repositoryService.todoRepository.preload({
-      id: id,
-      ...todo
-    });
+    await this.repositoryService.todoRepository.update(id, todo);
 
-    return this.repositoryService.todoRepository.save(todo);
+    return this.repositoryService.todoRepository.findOneBy({ id: id });
   }
 
   async removeAllTodos(): Promise<void> {

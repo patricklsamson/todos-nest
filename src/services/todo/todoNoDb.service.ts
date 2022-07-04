@@ -25,14 +25,14 @@ export class TodoNoDbService {
   update(id: number, todo: Todo): Todo {
     const index: number = this.todos.findIndex(todo => todo.id === id);
 
-    const updateTodo: Todo = {
+    const updatedTodo: Todo = {
       ...todo,
       id
     };
 
-    this.todos[index] = updateTodo;
+    this.todos[index] = updatedTodo;
 
-    return updateTodo;
+    return updatedTodo;
   }
 
   removeAll(): void {

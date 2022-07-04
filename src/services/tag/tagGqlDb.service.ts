@@ -27,12 +27,9 @@ export class TagGqlDbService {
   }
 
   async updateTag(id: number, tag: TagRequest): Promise<Tag> {
-    await this.repositoryService.tagRepository.preload({
-      id: id,
-      ...tag
-    });
+    await this.repositoryService.tagRepository.update(id, tag);
 
-    return this.repositoryService.tagRepository.save(tag);
+    return this.repositoryService.tagRepository.findOneBy({ id: id });
   }
 
   async removeAllTags(): Promise<void> {

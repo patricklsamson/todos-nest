@@ -23,14 +23,14 @@ export class TagNoDbService {
   update(id: number, tag: Tag): Tag {
     const index: number = this.tags.findIndex(tag => tag.id === id);
 
-    const updateTag: Tag = {
+    const updatedTag: Tag = {
       ...tag,
       id
     };
 
-    this.tags[index] = updateTag;
+    this.tags[index] = updatedTag;
 
-    return updateTag;
+    return updatedTag;
   }
 
   removeAll(): void {

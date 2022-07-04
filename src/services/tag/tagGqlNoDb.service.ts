@@ -21,14 +21,17 @@ export class TagGqlNoDbService {
     return tag;
   }
 
-  updateTag(tagEntry: TagRequest): Tag|any {
-    this.tags = this.tags.map(tag => {
-      if (tag.id === tagEntry.id) {
-        return { ...tagEntry };
-      }
+  updateTag(id: number, tag: TagRequest): Tag {
+    const index: number = this.tags.findIndex(todo => todo.id === id);
 
-      return tag;
-    });
+    const updatedTag: Tag = {
+      ...tag,
+      id
+    };
+
+    this.tags[index] = updatedTag;
+
+    return updatedTag;
   }
 
   removeAllTags(): void {

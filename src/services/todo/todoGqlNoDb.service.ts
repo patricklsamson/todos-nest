@@ -21,14 +21,17 @@ export class TodoGqlNoDbService {
     return todo;
   }
 
-  updateTodo(todoEntry: TodoRequest): Todo|any {
-    this.todos = this.todos.map(todo => {
-      if (todo.id === todoEntry.id) {
-        return { ...todoEntry };
-      }
+  updateTodo(id: number, todo: TodoRequest): Todo {
+    const index: number = this.todos.findIndex(todo => todo.id === id);
 
-      return todo;
-    });
+    const updatedTodo: Todo = {
+      ...todo,
+      id
+    };
+
+    this.todos[index] = updatedTodo;
+
+    return updatedTodo;
   }
 
   removeAllTodos(): void {

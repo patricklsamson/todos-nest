@@ -9,6 +9,6 @@ export class TagRequest {
   @Field(() => String)
   name: string;
 
-  @Field(() => TodoRequest)
+  @Field(() => TodoRequest, { nullable: true })
   todo?: TodoRequest;
 }

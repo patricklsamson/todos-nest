@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import entities from './models/index.entity';
 import modules from './modules/index.module';
 // import { SampleModule } from './sample/sample.module';
+// import { SampleGqlModule } from './sample-gql/sample-gql.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import modules from './modules/index.module';
       inject: [ConfigService],
     }),
     ...modules,
+    // SampleGqlModule,
     // SampleModule
   ],
   controllers: [AppController],

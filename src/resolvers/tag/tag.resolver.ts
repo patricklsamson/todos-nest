@@ -1,12 +1,13 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Tag } from '../../models/tag.entity';
-import { TagRequest } from '../../requests/tag.request';
-import { TagGqlNoDbService } from '../../services/tag/tagGqlNoDb.service';
+import { Tag } from '../../models/tag/tag.entity';
+import { CreateTagInput } from '../../requests/tag/create-tag.input';
+import { UpdateTagInput } from '../../requests/tag/update-tag.input';
+import { TagGqlService } from '../../services/tag/tag-gql.service';
 
 @Resolver(() => Tag)
 export class TagNoDbResolver {
-  constructor(private tagService: TagGqlNoDbService) {}
+  constructor(private tagService: TagGqlService) {}
 
   @Query(() => [Tag], { name: 'tags' })
   findAllTags(): Tag[] {
@@ -19,12 +20,12 @@ export class TagNoDbResolver {
   }
 
   @Mutation(() => Tag)
-  createTag(@Args('tag') tag: TagRequest): Tag {
+  createTag(@Args('tag') tag: CreateTagInput): Tag {
     return this.tagService.createTag(tag);
   }
 
   @Mutation(() => Tag)
-  updateTag(@Args('id', ParseIntPipe) id: number, @Args('tag') tag: TagRequest): Tag {
+  updateTag(@Args('id', ParseIntPipe) id: number, @Args('tag') tag: UpdateTagInput): Tag {
     return this.tagService.updateTag(id, tag);
   }
 

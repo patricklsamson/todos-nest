@@ -1,12 +1,13 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Todo } from '../../models/todo.entity';
-import { TodoRequest } from '../../requests/todo.request';
-import { TodoGqlNoDbService } from '../../services/todo/todoGqlNoDb.service';
+import { Todo } from '../../models/todo/todo.entity';
+import { CreateTodoInput } from '../../requests/todo/create-todo.input';
+import { UpdateTodoInput } from '../../requests/todo/update-todo.input';
+import { TodoGqlService } from '../../services/todo/todo-gql.service';
 
 @Resolver(() => Todo)
 export class TodoNoDbResolver {
-  constructor(private todoService: TodoGqlNoDbService) {}
+  constructor(private todoService: TodoGqlService) {}
 
   @Query(() => [Todo], { name: 'todos' })
   findAllTodos(): Todo[] {
@@ -19,12 +20,12 @@ export class TodoNoDbResolver {
   }
 
   @Mutation(() => Todo)
-  createTodo(@Args('todo') todo: TodoRequest): Todo {
+  createTodo(@Args('todo') todo: CreateTodoInput): Todo {
     return this.todoService.createTodo(todo);
   }
 
   @Mutation(() => Todo)
-  updateTodo(@Args('id', ParseIntPipe) id: number, @Args('todo') todo: TodoRequest): Todo {
+  updateTodo(@Args('id', ParseIntPipe) id: number, @Args('todo') todo: UpdateTodoInput): Todo {
     return this.todoService.updateTodo(id, todo);
   }
 

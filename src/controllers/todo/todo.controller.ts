@@ -10,13 +10,15 @@ import {
   UseInterceptors
 } from '@nestjs/common';
 import { TransformInterceptor } from '../../interceptors/transform.interceptor';
-import { Todo } from '../../models/todo.entity';
-import { TodoNoDbService } from '../../services/todo/todoNoDb.service';
+import { Todo } from '../../models/todo/todo.entity';
+import { CreateTodoDto } from '../../requests/todo/create-todo.dto';
+import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
+import { TodoService } from '../../services/todo/todo.service';
 
 @Controller('todos')
 @UseInterceptors(TransformInterceptor)
-export class TodoNoDbController {
-  constructor(private todoService: TodoNoDbService) {}
+export class TodoController {
+  constructor(private todoService: TodoService) {}
 
   @Get()
   findAll(): Todo[] {
@@ -29,12 +31,12 @@ export class TodoNoDbController {
   }
 
   @Post()
-  create(@Body() todo: Todo): Todo {
+  create(@Body() todo: CreateTodoDto): Todo {
     return this.todoService.create(todo);
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() todo: Todo): Todo {
+  update(@Param('id', ParseIntPipe) id: number, @Body() todo: UpdateTodoDto): Todo {
     return this.todoService.update(id, todo);
   }
 

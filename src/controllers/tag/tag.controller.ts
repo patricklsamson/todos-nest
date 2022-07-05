@@ -10,13 +10,15 @@ import {
   UseInterceptors
 } from '@nestjs/common';
 import { TransformInterceptor } from '../../interceptors/transform.interceptor';
-import { Tag } from '../../models/tag.entity';
-import { TagNoDbService } from '../../services/tag/tagNoDb.service';
+import { Tag } from '../../models/tag/tag.entity';
+import { CreateTagDto } from '../../requests/tag/create-tag.dto';
+import { UpdateTagDto } from '../../requests/tag/update-tag.dto';
+import { TagService } from '../../services/tag/tag.service';
 
 @Controller('tags')
 @UseInterceptors(TransformInterceptor)
-export class TagNoDbController {
-  constructor(private tagService: TagNoDbService) {}
+export class TagController {
+  constructor(private tagService: TagService) {}
 
   @Get()
   findAll(): Tag[] {
@@ -29,12 +31,12 @@ export class TagNoDbController {
   }
 
   @Post()
-  create(@Body() tag: Tag): Tag {
+  create(@Body() tag: CreateTagDto): Tag {
     return this.tagService.create(tag);
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() tag: Tag): Tag {
+  update(@Param('id', ParseIntPipe) id: number, @Body() tag: UpdateTagDto): Tag {
     return this.tagService.update(id, tag);
   }
 

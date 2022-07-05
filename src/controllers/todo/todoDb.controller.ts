@@ -10,8 +10,10 @@ import {
   UseInterceptors
 } from '@nestjs/common';
 import { TransformInterceptor } from '../../interceptors/transform.interceptor';
-import { Todo } from '../../models/todo.entity';
-import { TodoDbService } from '../../services/todo/todoDb.service';
+import { TodoDb } from '../../models/todo/todo-db.entity';
+import { CreateTodoDto } from '../../requests/todo/create-todo.dto';
+import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
+import { TodoDbService } from '../../services/todo/todo-db.service';
 
 @Controller('todos')
 @UseInterceptors(TransformInterceptor)
@@ -19,22 +21,22 @@ export class TodoDbController {
   constructor(private todoService: TodoDbService) {}
 
   @Get('db')
-  findAll(): Promise<Todo[]> {
+  findAll(): Promise<TodoDb[]> {
     return this.todoService.findAll();
   }
 
   @Get('db/:id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<Todo> {
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<TodoDb> {
     return this.todoService.findOne(id);
   }
 
   @Post('db')
-  create(@Body() todo: Todo): Promise<Todo> {
+  create(@Body() todo: CreateTodoDto): Promise<TodoDb> {
     return this.todoService.create(todo);
   }
 
   @Put('db/:id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() todo: Todo): Promise<Todo> {
+  update(@Param('id', ParseIntPipe) id: number, @Body() todo: UpdateTodoDto): Promise<TodoDb> {
     return this.todoService.update(id, todo);
   }
 

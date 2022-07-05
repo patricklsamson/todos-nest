@@ -24,8 +24,8 @@ export class TagNoDbService {
     const index: number = this.tags.findIndex(tag => tag.id === id);
 
     const updatedTag: Tag = {
-      ...tag,
-      id
+      id,
+      ...tag
     };
 
     this.tags[index] = updatedTag;

@@ -26,8 +26,8 @@ export class TodoNoDbService {
     const index: number = this.todos.findIndex(todo => todo.id === id);
 
     const updatedTodo: Todo = {
-      ...todo,
-      id
+      id,
+      ...todo
     };
 
     this.todos[index] = updatedTodo;

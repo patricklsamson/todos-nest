@@ -2,57 +2,78 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Todo {
-  id: ID
-  body: String
-  done: Boolean
-  tags: [Tag!]
+type TodoDb {
+  id: Int!
+  body: String!
+  done: Boolean!
+  tags: [TagDb!]
+}
+
+type TagDb {
+  id: Int!
+  name: String!
+  todo: TodoDb
 }
 
 type Tag {
-  id: ID
-  name: String!
-  todo: Todo
+  id: Int
+  name: String
+}
+
+type Todo {
+  id: Int
+  body: String
+  done: Boolean
 }
 
 type Query {
-  dbTags: [Tag!]!
-  dbTag(id: Float!): Tag!
+  dbTags: [TagDb!]!
+  dbTag(id: Float!): TagDb!
   tags: [Tag!]!
   tag(id: Float!): Tag!
-  dbTodos: [Todo!]!
-  dbTodo(id: Float!): Todo!
+  dbTodos: [TodoDb!]!
+  dbTodo(id: Float!): TodoDb!
   todos: [Todo!]!
   todo(id: Float!): Todo!
 }
 
 type Mutation {
-  createDbTag(tag: TagRequest!): Tag!
-  updateDbTag(tag: TagRequest!): Tag!
-  removeAllDbTags: Tag!
-  removeOneDbTag(id: Float!): Tag!
-  createTag(tag: TagRequest!): Tag!
-  updateTag(id: Float!, tag: TagRequest!): Tag!
+  createDbTag(tag: CreateTagInput!): TagDb!
+  updateDbTag(tag: UpdateTagInput!): TagDb!
+  removeAllDbTags: TagDb!
+  removeOneDbTag(id: Float!): TagDb!
+  createTag(tag: CreateTagInput!): Tag!
+  updateTag(id: Float!, tag: UpdateTagInput!): Tag!
   removeAllTags: Tag!
   removeOneTag(id: Float!): Tag!
-  createDbTodo(todo: TodoRequest!): Todo!
-  updateDbTodo(todo: TodoRequest!): Todo!
-  removeAllDbTodos: Todo!
-  removeOneDbTodo(id: Float!): Todo!
-  createTodo(todo: TodoRequest!): Todo!
-  updateTodo(id: Float!, todo: TodoRequest!): Todo!
+  createDbTodo(todo: CreateTodoInput!): TodoDb!
+  updateDbTodo(todo: UpdateTodoInput!): TodoDb!
+  removeAllDbTodos: TodoDb!
+  removeOneDbTodo(id: Float!): TodoDb!
+  createTodo(todo: CreateTodoInput!): Todo!
+  updateTodo(id: Float!, todo: UpdateTodoInput!): Todo!
   removeAllTodos: Todo!
   removeOneTodo(id: Float!): Todo!
 }
 
-input TagRequest {
-  id: ID
+input CreateTagInput {
   name: String!
-  todo: TodoRequest
+  todoId: Int!
 }
 
-input TodoRequest {
-  id: ID
+input UpdateTagInput {
+  name: String
+  todoId: Int
+  id: Int!
+}
+
+input CreateTodoInput {
+  body: String!
+  done: Boolean!
+}
+
+input UpdateTodoInput {
   body: String
   done: Boolean
+  id: Int!
 }

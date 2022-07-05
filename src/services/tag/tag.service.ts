@@ -1,6 +1,6 @@
-import { Tag } from "../../models/tag.entity";
+import { Tag } from "../../models/tag/tag.entity";
 
-export class TagNoDbService {
+export class TagService {
   public tags: Tag[] = [];
 
   findAll(): Tag[] {

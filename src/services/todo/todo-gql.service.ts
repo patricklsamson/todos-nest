@@ -1,7 +1,8 @@
-import { Todo } from '../../models/todo.entity';
-import { TodoRequest } from '../../requests/todo.request';
+import { Todo } from '../../models/todo/todo.entity';
+import { CreateTodoInput } from '../../requests/todo/create-todo.input';
+import { UpdateTodoInput } from '../../requests/todo/update-todo.input';
 
-export class TodoGqlNoDbService {
+export class TodoGqlService {
   public todos: Todo[] = [];
 
   findAllTodos(): Todo[] {
@@ -12,7 +13,7 @@ export class TodoGqlNoDbService {
     return this.todos.find(todo => todo.id === id);
   }
 
-  createTodo(todo: TodoRequest): Todo {
+  createTodo(todo: CreateTodoInput): Todo {
     this.todos = [
       ...this.todos,
       { id: this.todos.length + 1, ...todo }
@@ -21,10 +22,10 @@ export class TodoGqlNoDbService {
     return todo;
   }
 
-  updateTodo(id: number, todo: TodoRequest): Todo {
+  updateTodo(id: number, todo: UpdateTodoInput): Todo {
     const index: number = this.todos.findIndex(todo => todo.id === id);
 
-    const updatedTodo: Todo = {
+    const updatedTodo: UpdateTodoInput = {
       ...todo,
       id
     };

@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Tag } from "../models/tag.entity";
-import { Todo } from "../models/todo.entity";
+import { TagDb } from "../models/tag/tag-db.entity";
+import { TodoDb } from "../models/todo/todo-db.entity";
 
 @Injectable()
 export class RepositoryService {
   constructor(
-    @InjectRepository(Tag) public tagRepository: Repository<Tag>,
-    @InjectRepository(Todo) public todoRepository: Repository<Todo>
+    @InjectRepository(TagDb) public tagRepository: Repository<TagDb>,
+    @InjectRepository(TodoDb) public todoRepository: Repository<TodoDb>
   ) {}
 }

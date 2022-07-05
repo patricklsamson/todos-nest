@@ -1,45 +1,46 @@
 import { Injectable } from '@nestjs/common';
-import { Tag } from '../../models/tag.entity';
-import { TagRequest } from '../../requests/tag.request';
+import { TagDb } from '../../models/tag/tag-db.entity';
+import { CreateTagInput } from '../../requests/tag/create-tag.input';
+import { UpdateTagInput } from '../../requests/tag/update-tag.input';
 import { RepositoryService } from '../repository.service';
 
 @Injectable()
 export class TagGqlDbService {
   constructor(private repositoryService: RepositoryService) {}
 
-  findAllTags(): Promise<Tag[]> {
+  findAllTags(): Promise<TagDb[]> {
     return this.repositoryService.tagRepository.find({
       relations: ['todo']
     });
   }
 
-  findOneTag(id: number): Promise<Tag> {
+  findOneTag(id: number): Promise<TagDb> {
     return this.repositoryService.tagRepository.findOne({
       where: { id: id },
       relations: ['todo']
     });
   }
 
-  createTag(tag: TagRequest): Promise<Tag> {
-    const newTag: TagRequest = this.repositoryService.tagRepository.create(tag);
+  createTag(tag: CreateTagInput): Promise<TagDb> {
+    const newTag: CreateTagInput = this.repositoryService.tagRepository.create(tag);
 
     return this.repositoryService.tagRepository.save(newTag);
   }
 
-  async updateTag(id: number, tag: TagRequest): Promise<Tag> {
+  async updateTag(id: number, tag: UpdateTagInput): Promise<TagDb> {
     await this.repositoryService.tagRepository.update(id, tag);
 
     return this.repositoryService.tagRepository.findOneBy({ id: id });
   }
 
   async removeAllTags(): Promise<void> {
-    const tags: Tag[] = await this.repositoryService.tagRepository.find();
+    const tags: TagDb[] = await this.repositoryService.tagRepository.find();
 
     tags.forEach(tag => this.repositoryService.tagRepository.delete(tag.id));
   }
 
   async removeOneTag(id: number): Promise<void> {
-    const tag: Tag = await this.repositoryService.tagRepository.findOneBy({ id: id });
+    const tag: TagDb = await this.repositoryService.tagRepository.findOneBy({ id: id });
 
     this.repositoryService.tagRepository.remove(tag);
   }

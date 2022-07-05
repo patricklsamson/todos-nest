@@ -1,43 +1,44 @@
 import { Injectable } from "@nestjs/common";
-import { Todo } from '../../models/todo.entity';
-import { TodoRequest } from '../../requests/todo.request';
+import { TodoDb } from '../../models/todo/todo-db.entity';
+import { CreateTodoInput } from '../../requests/todo/create-todo.input';
+import { UpdateTodoInput } from "../../requests/todo/update-todo.input";
 import { RepositoryService } from '../repository.service';
 
 @Injectable()
 export class TodoGqlDbService {
   constructor(private repositoryService: RepositoryService) {}
 
-  findAllTodos(): Promise<Todo[]> {
+  findAllTodos(): Promise<TodoDb[]> {
     return this.repositoryService.todoRepository.find({ relations: ['tags'] })
   }
 
-  findOneTodo(id: number): Promise<Todo> {
+  findOneTodo(id: number): Promise<TodoDb> {
     return this.repositoryService.todoRepository.findOne({
       where: { id: id },
       relations: ['tags']
     });
   }
 
-  createTodo(todo: TodoRequest): Promise<Todo> {
-    const newTodo: TodoRequest = this.repositoryService.todoRepository.create(todo);
+  createTodo(todo: CreateTodoInput): Promise<TodoDb> {
+    const newTodo: CreateTodoInput = this.repositoryService.todoRepository.create(todo);
 
     return this.repositoryService.todoRepository.save(newTodo);
   }
 
-  async updateTodo(id: number, todo: TodoRequest): Promise<Todo> {
+  async updateTodo(id: number, todo: UpdateTodoInput): Promise<TodoDb> {
     await this.repositoryService.todoRepository.update(id, todo);
 
     return this.repositoryService.todoRepository.findOneBy({ id: id });
   }
 
   async removeAllTodos(): Promise<void> {
-    const todos: Todo[] = await this.repositoryService.todoRepository.find();
+    const todos: TodoDb[] = await this.repositoryService.todoRepository.find();
 
     todos.forEach(todo => this.repositoryService.todoRepository.remove(todo));
   }
 
   async removeOneTodo(id: number): Promise<void> {
-    const todo: Todo = await this.repositoryService.todoRepository.findOneBy({ id: id });
+    const todo: TodoDb = await this.repositoryService.todoRepository.findOneBy({ id: id });
 
     this.repositoryService.todoRepository.remove(todo);
   }

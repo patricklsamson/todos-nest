@@ -11,8 +11,7 @@ import {
 } from '@nestjs/common';
 import { TransformInterceptor } from '../../interceptors/transform.interceptor';
 import { Tag } from '../../models/tag/tag.entity';
-import { CreateTagDto } from '../../requests/tag/create-tag.dto';
-import { UpdateTagDto } from '../../requests/tag/update-tag.dto';
+import { TagDto } from '../../requests/tag/tag.dto';
 import { TagService } from '../../services/tag/tag.service';
 
 @Controller('tags')
@@ -31,12 +30,12 @@ export class TagController {
   }
 
   @Post()
-  create(@Body() tag: CreateTagDto): Tag {
+  create(@Body() tag: TagDto): Tag {
     return this.tagService.create(tag);
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() tag: UpdateTagDto): Tag {
+  update(@Param('id', ParseIntPipe) id: number, @Body() tag: TagDto): Tag {
     return this.tagService.update(id, tag);
   }
 

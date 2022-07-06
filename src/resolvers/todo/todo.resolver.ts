@@ -1,8 +1,7 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Todo } from '../../models/todo/todo.entity';
-import { CreateTodoInput } from '../../requests/todo/create-todo.input';
-import { UpdateTodoInput } from '../../requests/todo/update-todo.input';
+import { TodoInput } from '../../requests/todo/todo.input';
 import { TodoGqlService } from '../../services/todo/todo-gql.service';
 
 @Resolver(() => Todo)
@@ -20,12 +19,12 @@ export class TodoNoDbResolver {
   }
 
   @Mutation(() => Todo)
-  createTodo(@Args('todo') todo: CreateTodoInput): Todo {
+  createTodo(@Args('todo') todo: TodoInput): Todo {
     return this.todoService.createTodo(todo);
   }
 
   @Mutation(() => Todo)
-  updateTodo(@Args('id', ParseIntPipe) id: number, @Args('todo') todo: UpdateTodoInput): Todo {
+  updateTodo(@Args('id', ParseIntPipe) id: number, @Args('todo') todo: TodoInput): Todo {
     return this.todoService.updateTodo(id, todo);
   }
 

@@ -1,6 +1,5 @@
 import { Tag } from "../../models/tag/tag.entity";
-import { CreateTagInput } from "../../requests/tag/create-tag.input";
-import { UpdateTagInput } from "../../requests/tag/update-tag.input";
+import { TagInput } from "../../requests/tag/tag.input";
 
 export class TagGqlService {
   public tags: Tag[] = [];
@@ -13,7 +12,7 @@ export class TagGqlService {
     return this.tags.find(tag => tag.id === id);
   }
 
-  createTag(tag: CreateTagInput): Tag {
+  createTag(tag: TagInput): Tag {
     this.tags = [
       ...this.tags,
       { id: this.tags.length + 1, ...tag }
@@ -22,10 +21,10 @@ export class TagGqlService {
     return tag;
   }
 
-  updateTag(id: number, tag: UpdateTagInput): Tag {
+  updateTag(id: number, tag: TagInput): Tag {
     const index: number = this.tags.findIndex(todo => todo.id === id);
 
-    const updatedTag: UpdateTagInput = {
+    const updatedTag: TagInput = {
       ...tag,
       id
     };

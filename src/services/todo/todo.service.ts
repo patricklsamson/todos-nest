@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Todo } from '../../models/todo/todo.entity';
-import { CreateTodoDto } from '../../requests/todo/create-todo.dto';
-import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
+import { TodoDto } from '../../requests/todo/todo.dto';
 
 @Injectable()
 export class TodoService {
@@ -15,7 +14,7 @@ export class TodoService {
     return this.todos.find(todo => todo.id === id);
   }
 
-  create(todo: CreateTodoDto): Todo {
+  create(todo: TodoDto): Todo {
     this.todos = [
       ...this.todos,
       { id: this.todos.length + 1, ...todo }
@@ -24,10 +23,10 @@ export class TodoService {
     return todo;
   }
 
-  update(id: number, todo: UpdateTodoDto): Todo {
+  update(id: number, todo: TodoDto): Todo {
     const index: number = this.todos.findIndex(todo => todo.id === id);
 
-    const updatedTodo: UpdateTodoDto = {
+    const updatedTodo: TodoDto = {
       id,
       ...todo
     };

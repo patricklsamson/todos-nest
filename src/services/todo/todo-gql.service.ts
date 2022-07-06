@@ -1,6 +1,5 @@
 import { Todo } from '../../models/todo/todo.entity';
-import { CreateTodoInput } from '../../requests/todo/create-todo.input';
-import { UpdateTodoInput } from '../../requests/todo/update-todo.input';
+import { TodoInput } from '../../requests/todo/todo.input';
 
 export class TodoGqlService {
   public todos: Todo[] = [];
@@ -13,7 +12,7 @@ export class TodoGqlService {
     return this.todos.find(todo => todo.id === id);
   }
 
-  createTodo(todo: CreateTodoInput): Todo {
+  createTodo(todo: TodoInput): Todo {
     this.todos = [
       ...this.todos,
       { id: this.todos.length + 1, ...todo }
@@ -22,10 +21,10 @@ export class TodoGqlService {
     return todo;
   }
 
-  updateTodo(id: number, todo: UpdateTodoInput): Todo {
+  updateTodo(id: number, todo: TodoInput): Todo {
     const index: number = this.todos.findIndex(todo => todo.id === id);
 
-    const updatedTodo: UpdateTodoInput = {
+    const updatedTodo: TodoInput = {
       ...todo,
       id
     };

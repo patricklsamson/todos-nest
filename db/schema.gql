@@ -16,14 +16,14 @@ type TagDb {
 }
 
 type Tag {
-  id: Int
-  name: String
+  id: Int!
+  name: String!
 }
 
 type Todo {
-  id: Int
-  body: String
-  done: Boolean
+  id: Int!
+  body: String!
+  done: Boolean!
 }
 
 type Query {
@@ -42,16 +42,16 @@ type Mutation {
   updateDbTag(tag: UpdateTagInput!): TagDb!
   removeAllDbTags: TagDb!
   removeOneDbTag(id: Float!): TagDb!
-  createTag(tag: CreateTagInput!): Tag!
-  updateTag(id: Float!, tag: UpdateTagInput!): Tag!
+  createTag(tag: TagInput!): Tag!
+  updateTag(id: Float!, tag: TagInput!): Tag!
   removeAllTags: Tag!
   removeOneTag(id: Float!): Tag!
   createDbTodo(todo: CreateTodoInput!): TodoDb!
   updateDbTodo(todo: UpdateTodoInput!): TodoDb!
   removeAllDbTodos: TodoDb!
   removeOneDbTodo(id: Float!): TodoDb!
-  createTodo(todo: CreateTodoInput!): Todo!
-  updateTodo(id: Float!, todo: UpdateTodoInput!): Todo!
+  createTodo(todo: TodoInput!): Todo!
+  updateTodo(id: Float!, todo: TodoInput!): Todo!
   removeAllTodos: Todo!
   removeOneTodo(id: Float!): Todo!
 }
@@ -67,6 +67,11 @@ input UpdateTagInput {
   id: Int!
 }
 
+input TagInput {
+  id: Int!
+  name: String!
+}
+
 input CreateTodoInput {
   body: String!
   done: Boolean!
@@ -76,4 +81,10 @@ input UpdateTodoInput {
   body: String
   done: Boolean
   id: Int!
+}
+
+input TodoInput {
+  id: Int!
+  body: String!
+  done: Boolean!
 }

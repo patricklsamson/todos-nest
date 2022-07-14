@@ -8,6 +8,7 @@ import { RepositoryService } from "../services/repository.service";
   imports: [
     TypeOrmModule.forFeature(entities)
   ],
-  providers: [RepositoryService]
+  providers: [RepositoryService],
+  exports: [RepositoryService]
 })
 export class RepositoryModule {}

@@ -40,20 +40,20 @@ type Query {
 type Mutation {
   createDbTag(tag: CreateTagInput!): TagDb!
   updateDbTag(tag: UpdateTagInput!): TagDb!
-  removeAllDbTags: TagDb!
-  removeOneDbTag(id: Float!): TagDb!
+  removeAllDbTags: Boolean!
+  removeOneDbTag(id: Float!): Boolean!
   createTag(tag: TagInput!): Tag!
   updateTag(id: Float!, tag: TagInput!): Tag!
-  removeAllTags: Tag!
-  removeOneTag(id: Float!): Tag!
+  removeAllTags: Boolean!
+  removeOneTag(id: Float!): Boolean!
   createDbTodo(todo: CreateTodoInput!): TodoDb!
   updateDbTodo(todo: UpdateTodoInput!): TodoDb!
-  removeAllDbTodos: TodoDb!
-  removeOneDbTodo(id: Float!): TodoDb!
+  removeAllDbTodos: Boolean!
+  removeOneDbTodo(id: Float!): Boolean!
   createTodo(todo: TodoInput!): Todo!
   updateTodo(id: Float!, todo: TodoInput!): Todo!
-  removeAllTodos: Todo!
-  removeOneTodo(id: Float!): Todo!
+  removeAllTodos: Boolean!
+  removeOneTodo(id: Float!): Boolean!
 }
 
 input CreateTagInput {

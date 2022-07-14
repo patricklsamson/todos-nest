@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { TagDb } from '../../models/tag/tag-db.entity';
-import { RepositoryIndex } from '../../repositories/repository.index';
+import { IndexRepository } from '../../repositories/index.repository';
 import { CreateTagInput } from '../../requests/tag/create-tag.input';
 import { UpdateTagInput } from '../../requests/tag/update-tag.input';
 
 @Injectable()
 export class TagGqlDbService {
-  constructor(private repositoryIndex: RepositoryIndex) {}
+  constructor(private repositoryIndex: IndexRepository) {}
 
   findAllTags(): Promise<TagDb[]> {
     return this.repositoryIndex.tagRepository.find({

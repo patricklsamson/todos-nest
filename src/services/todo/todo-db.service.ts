@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { TodoDb } from '../../models/todo/todo-db.entity';
-import { RepositoryIndex } from '../../repositories/repository.index';
+import { IndexRepository } from '../../repositories/index.repository';
 import { CreateTodoDto } from '../../requests/todo/create-todo.dto';
 import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
 
 @Injectable()
 export class TodoDbService {
-  constructor(private repositoryIndex: RepositoryIndex) {}
+  constructor(private repositoryIndex: IndexRepository) {}
 
   findAll(): Promise<TodoDb[]> {
     return this.repositoryIndex.todoRepository.find({ relations: ['tags'] });

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoController } from '../controllers/todo/todo.controller';
 import { TodoDbController } from '../controllers/todo/todoDb.controller';
-import entities from '../models/index.entity';
+import indexEntity from '../models/index.entity';
 import { TodoDbResolver } from '../resolvers/todo/todo-db.resolver';
 import { TodoNoDbResolver } from '../resolvers/todo/todo.resolver';
 import { TodoDbService } from '../services/todo/todo-db.service';
@@ -11,7 +11,7 @@ import { TodoGqlService } from '../services/todo/todo-gql.service';
 import { TodoService } from '../services/todo/todo.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature(entities)],
+  imports: [TypeOrmModule.forFeature(indexEntity)],
   controllers: [TodoController, TodoDbController],
   providers: [
     TodoDbResolver,

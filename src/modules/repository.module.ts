@@ -1,12 +1,12 @@
 import { Global, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import entities from "../models/index.entity";
-import { RepositoryIndex } from "../repositories/repository.index";
+import indexEntity from "../models/index.entity";
+import { IndexRepository } from "../repositories/index.repository";
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature(entities)],
-  providers: [RepositoryIndex],
-  exports: [RepositoryIndex]
+  imports: [TypeOrmModule.forFeature(indexEntity)],
+  providers: [IndexRepository],
+  exports: [IndexRepository]
 })
 export class RepositoryModule {}

@@ -8,6 +8,6 @@ export class Todo {
   @Field()
   body: string;
 
-  @Field()
+  @Field(() => Boolean)
   done: boolean;
 }

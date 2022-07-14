@@ -14,7 +14,7 @@ export class TodoDb {
   body: string;
 
   @Column({ type: 'boolean' })
-  @Field()
+  @Field(() => Boolean)
   done: boolean;
 
   @OneToMany(

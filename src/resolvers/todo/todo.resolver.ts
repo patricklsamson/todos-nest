@@ -28,13 +28,13 @@ export class TodoNoDbResolver {
     return this.todoService.updateTodo(id, todo);
   }
 
-  @Mutation(() => Todo)
-  removeAllTodos(): void {
+  @Mutation(() => Boolean)
+  removeAllTodos(): boolean {
     return this.todoService.removeAllTodos();
   }
 
-  @Mutation(() => Todo)
-  removeOneTodo(@Args('id', ParseIntPipe) id: number): void {
+  @Mutation(() => Boolean)
+  removeOneTodo(@Args('id', ParseIntPipe) id: number): boolean {
     return this.todoService.removeOneTodo(id);
   }
 }

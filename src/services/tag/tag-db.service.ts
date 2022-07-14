@@ -1,45 +1,45 @@
 import { Injectable } from "@nestjs/common";
 import { TagDb } from "../../models/tag/tag-db.entity";
+import { RepositoryIndex } from "../../repositories/repository.index";
 import { CreateTagDto } from "../../requests/tag/create-tag.dto";
 import { UpdateTagDto } from "../../requests/tag/update-tag.dto";
-import { RepositoryService } from "../repository.service";
 
 @Injectable()
 export class TagDbService {
-  constructor(private repositoryService: RepositoryService) {}
+  constructor(private repositoryIndex: RepositoryIndex) {}
 
   findAll(): Promise<TagDb[]> {
-    return this.repositoryService.tagRepository.find({
+    return this.repositoryIndex.tagRepository.find({
       relations: ['todo']
     });
   }
 
   findOne(id: number): Promise<TagDb> {
-    return this.repositoryService.tagRepository.findOne({
+    return this.repositoryIndex.tagRepository.findOne({
       where: { id: id },
       relations: ['todo']
     });
   }
 
   create(tag: CreateTagDto): Promise<TagDb> {
-    const newTag: CreateTagDto = this.repositoryService.tagRepository.create(tag);
+    const newTag: CreateTagDto = this.repositoryIndex.tagRepository.create(tag);
 
-    return this.repositoryService.tagRepository.save(newTag);
+    return this.repositoryIndex.tagRepository.save(newTag);
   }
 
   async update(id: number, tag: UpdateTagDto): Promise<TagDb> {
-    await this.repositoryService.tagRepository.update(id, tag);
+    await this.repositoryIndex.tagRepository.update(id, tag);
 
-    return this.repositoryService.tagRepository.findOneBy({ id: id });
+    return this.repositoryIndex.tagRepository.findOneBy({ id: id });
   }
 
   async removeAll(): Promise<void> {
-    const tags: TagDb[] = await this.repositoryService.tagRepository.find();
+    const tags: TagDb[] = await this.repositoryIndex.tagRepository.find();
 
-    tags.forEach(tag => this.repositoryService.tagRepository.delete(tag.id));
+    tags.forEach(tag => this.repositoryIndex.tagRepository.delete(tag.id));
   }
 
   removeOne(id: number): void {
-    this.repositoryService.tagRepository.delete(id);
+    this.repositoryIndex.tagRepository.delete(id);
   }
 }

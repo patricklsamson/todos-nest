@@ -1,43 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { TodoDb } from '../../models/todo/todo-db.entity';
+import { RepositoryIndex } from '../../repositories/repository.index';
 import { CreateTodoDto } from '../../requests/todo/create-todo.dto';
 import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
-import { RepositoryService } from '../repository.service';
 
 @Injectable()
 export class TodoDbService {
-  constructor(private repositoryService: RepositoryService) {}
+  constructor(private repositoryIndex: RepositoryIndex) {}
 
   findAll(): Promise<TodoDb[]> {
-    return this.repositoryService.todoRepository.find({ relations: ['tags'] });
+    return this.repositoryIndex.todoRepository.find({ relations: ['tags'] });
   }
 
   findOne(id: number): Promise<TodoDb> {
-    return this.repositoryService.todoRepository.findOne({
+    return this.repositoryIndex.todoRepository.findOne({
       where: { id: id },
       relations: ['tags']
     });
   }
 
   create(todo: CreateTodoDto): Promise<TodoDb> {
-    const newTodo: CreateTodoDto = this.repositoryService.todoRepository.create(todo);
+    const newTodo: CreateTodoDto = this.repositoryIndex.todoRepository.create(todo);
 
-    return this.repositoryService.todoRepository.save(newTodo);
+    return this.repositoryIndex.todoRepository.save(newTodo);
   }
 
   async update(id: number, todo: UpdateTodoDto): Promise<TodoDb> {
-    await this.repositoryService.todoRepository.update(id, todo);
+    await this.repositoryIndex.todoRepository.update(id, todo);
 
-    return this.repositoryService.todoRepository.findOneBy({ id: id });
+    return this.repositoryIndex.todoRepository.findOneBy({ id: id });
   }
 
   async removeAll(): Promise<void> {
-    const todos: TodoDb[] = await this.repositoryService.todoRepository.find();
+    const todos: TodoDb[] = await this.repositoryIndex.todoRepository.find();
 
-    todos.forEach(todo => this.repositoryService.todoRepository.delete(todo.id));
+    todos.forEach(todo => this.repositoryIndex.todoRepository.delete(todo.id));
   }
 
   removeOne(id: number): void {
-    this.repositoryService.todoRepository.delete(id);
+    this.repositoryIndex.todoRepository.delete(id);
   }
 }

@@ -1,47 +1,47 @@
 import { Injectable } from '@nestjs/common';
 import { TagDb } from '../../models/tag/tag-db.entity';
+import { RepositoryIndex } from '../../repositories/repository.index';
 import { CreateTagInput } from '../../requests/tag/create-tag.input';
 import { UpdateTagInput } from '../../requests/tag/update-tag.input';
-import { RepositoryService } from '../repository.service';
 
 @Injectable()
 export class TagGqlDbService {
-  constructor(private repositoryService: RepositoryService) {}
+  constructor(private repositoryIndex: RepositoryIndex) {}
 
   findAllTags(): Promise<TagDb[]> {
-    return this.repositoryService.tagRepository.find({
+    return this.repositoryIndex.tagRepository.find({
       relations: ['todo']
     });
   }
 
   findOneTag(id: number): Promise<TagDb> {
-    return this.repositoryService.tagRepository.findOne({
+    return this.repositoryIndex.tagRepository.findOne({
       where: { id: id },
       relations: ['todo']
     });
   }
 
   createTag(tag: CreateTagInput): Promise<TagDb> {
-    const newTag: CreateTagInput = this.repositoryService.tagRepository.create(tag);
+    const newTag: CreateTagInput = this.repositoryIndex.tagRepository.create(tag);
 
-    return this.repositoryService.tagRepository.save(newTag);
+    return this.repositoryIndex.tagRepository.save(newTag);
   }
 
   async updateTag(id: number, tag: UpdateTagInput): Promise<TagDb> {
-    await this.repositoryService.tagRepository.update(id, tag);
+    await this.repositoryIndex.tagRepository.update(id, tag);
 
-    return this.repositoryService.tagRepository.findOneBy({ id: id });
+    return this.repositoryIndex.tagRepository.findOneBy({ id: id });
   }
 
   async removeAllTags(): Promise<void> {
-    const tags: TagDb[] = await this.repositoryService.tagRepository.find();
+    const tags: TagDb[] = await this.repositoryIndex.tagRepository.find();
 
-    tags.forEach(tag => this.repositoryService.tagRepository.delete(tag.id));
+    tags.forEach(tag => this.repositoryIndex.tagRepository.delete(tag.id));
   }
 
   async removeOneTag(id: number): Promise<void> {
-    const tag: TagDb = await this.repositoryService.tagRepository.findOneBy({ id: id });
+    const tag: TagDb = await this.repositoryIndex.tagRepository.findOneBy({ id: id });
 
-    this.repositoryService.tagRepository.remove(tag);
+    this.repositoryIndex.tagRepository.remove(tag);
   }
 }

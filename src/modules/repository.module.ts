@@ -5,9 +5,7 @@ import { RepositoryIndex } from "../repositories/repository.index";
 
 @Global()
 @Module({
-  imports: [
-    TypeOrmModule.forFeature(entities)
-  ],
+  imports: [TypeOrmModule.forFeature(entities)],
   providers: [RepositoryIndex],
   exports: [RepositoryIndex]
 })

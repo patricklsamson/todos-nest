@@ -31,15 +31,19 @@ export class TodoGqlDbService {
     return this.repositoryIndex.todoRepository.findOneBy({ id: id });
   }
 
-  async removeAllTodos(): Promise<void> {
+  async removeAllTodos(): Promise<boolean> {
     const todos: TodoDb[] = await this.repositoryIndex.todoRepository.find();
 
     todos.forEach(todo => this.repositoryIndex.todoRepository.remove(todo));
+
+    return true;
   }
 
-  async removeOneTodo(id: number): Promise<void> {
+  async removeOneTodo(id: number): Promise<boolean> {
     const todo: TodoDb = await this.repositoryIndex.todoRepository.findOneBy({ id: id });
 
     this.repositoryIndex.todoRepository.remove(todo);
+
+    return true;
   }
 }

@@ -33,15 +33,19 @@ export class TagGqlDbService {
     return this.repositoryIndex.tagRepository.findOneBy({ id: id });
   }
 
-  async removeAllTags(): Promise<void> {
+  async removeAllTags(): Promise<boolean> {
     const tags: TagDb[] = await this.repositoryIndex.tagRepository.find();
 
     tags.forEach(tag => this.repositoryIndex.tagRepository.delete(tag.id));
+
+    return true;
   }
 
-  async removeOneTag(id: number): Promise<void> {
+  async removeOneTag(id: number): Promise<boolean> {
     const tag: TagDb = await this.repositoryIndex.tagRepository.findOneBy({ id: id });
 
     this.repositoryIndex.tagRepository.remove(tag);
+
+    return true;
   }
 }

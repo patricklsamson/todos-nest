@@ -34,11 +34,15 @@ export class TodoGqlService {
     return updatedTodo;
   }
 
-  removeAllTodos(): void {
+  removeAllTodos(): boolean {
     this.todos = [];
+
+    return true;
   }
 
-  removeOneTodo(id: number): void {
+  removeOneTodo(id: number): boolean {
     this.todos = this.todos.filter(todo => todo.id !== id);
+
+    return true;
   }
 }

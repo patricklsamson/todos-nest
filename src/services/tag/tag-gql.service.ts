@@ -34,11 +34,15 @@ export class TagGqlService {
     return updatedTag;
   }
 
-  removeAllTags(): void {
+  removeAllTags(): boolean {
     this.tags = [];
+
+    return true;
   }
 
-  removeOneTag(id: number): void {
+  removeOneTag(id: number): boolean {
     this.tags = this.tags.filter(tag => tag.id !== id);
+
+    return true;
   }
 }

@@ -8,7 +8,7 @@ import { GraphQLError } from 'graphql';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import entities from './models/index.entity';
+import indexEntity from './models/index.entity';
 import modules from './modules/index.module';
 // import { SampleModule } from './sample/sample.module';
 // import { SampleGqlModule } from './sample-gql/sample-gql.module';
@@ -19,6 +19,7 @@ import modules from './modules/index.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), './db/schema.gql'),
+      path: '/v1',
       debug: true,
       playground: true,
       formatError: (error: ApolloError|GraphQLError) => {
@@ -38,7 +39,7 @@ import modules from './modules/index.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: entities,
+        entities: indexEntity,
         synchronize: true,
       }),
       inject: [ConfigService],

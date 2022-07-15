@@ -9,7 +9,7 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import indexEntity from './models/index.entity';
-import modules from './modules/index.module';
+import indexModule from './modules/index.module';
 // import { SampleModule } from './sample/sample.module';
 // import { SampleGqlModule } from './sample-gql/sample-gql.module';
 
@@ -44,7 +44,7 @@ import modules from './modules/index.module';
       }),
       inject: [ConfigService],
     }),
-    ...modules,
+    ...indexModule,
     // SampleGqlModule,
     // SampleModule
   ],

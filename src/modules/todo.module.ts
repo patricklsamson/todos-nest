@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoController } from '../controllers/todo/todo.controller';
-import { TodoDbController } from '../controllers/todo/todoDb.controller';
+import { TodoDbController } from '../controllers/todo/todo-db.controller';
 import indexEntity from '../models/index.entity';
 import { TodoDbResolver } from '../resolvers/todo/todo-db.resolver';
 import { TodoNoDbResolver } from '../resolvers/todo/todo.resolver';

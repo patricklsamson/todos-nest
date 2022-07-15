@@ -15,37 +15,37 @@ import { CreateTagDto } from '../../requests/tag/create-tag.dto';
 import { UpdateTagDto } from '../../requests/tag/update-tag.dto';
 import { TagDbService } from '../../services/tag/tag-db.service';
 
-@Controller('tags')
+@Controller('db-tags')
 @UseInterceptors(TransformInterceptor)
 export class TagDbController {
   constructor(private tagService: TagDbService) {}
 
-  @Get('db')
+  @Get()
   findAll(): Promise<TagDb[]> {
     return this.tagService.findAll();
   }
 
-  @Get('db/:id')
+  @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number): Promise<TagDb> {
     return this.tagService.findOne(id);
   }
 
-  @Post('db')
+  @Post()
   create(@Body() tag: CreateTagDto): Promise<TagDb> {
     return this.tagService.create(tag);
   }
 
-  @Put('db/:id')
+  @Put(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() tag: UpdateTagDto): Promise<TagDb> {
     return this.tagService.update(id, tag);
   }
 
-  @Delete('db')
+  @Delete()
   removeAll(): void {
     this.tagService.removeAll();
   }
 
-  @Delete('db/:id')
+  @Delete(':id')
   removeOne(@Param('id', ParseIntPipe) id: number): void {
     this.tagService.removeOne(id);
   }

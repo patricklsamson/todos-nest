@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TagController } from '../controllers/tag/tag.controller';
-import { TagDbController } from '../controllers/tag/tagDb.controller';
+import { TagDbController } from '../controllers/tag/tag-db.controller';
 import indexEntity from '../models/index.entity';
 import { TagDbResolver } from "../resolvers/tag/tag-db.resolver";
 import { TagNoDbResolver } from "../resolvers/tag/tag.resolver";

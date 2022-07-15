@@ -18,7 +18,7 @@ import indexModule from './modules/index.module';
     ConfigModule.forRoot({ isGlobal: true }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), './db/schema.gql'),
+      autoSchemaFile: join(process.cwd(), './schemas/schema.gql'),
       path: '/v1',
       debug: true,
       playground: true,

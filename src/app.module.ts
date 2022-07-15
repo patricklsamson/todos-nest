@@ -19,7 +19,7 @@ import indexModule from './modules/index.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), './schemas/schema.gql'),
-      path: '/v1',
+      path: 'v1/gql',
       debug: true,
       playground: true,
       formatError: (error: ApolloError|GraphQLError) => {

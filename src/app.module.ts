@@ -25,7 +25,7 @@ import indexModule from './modules/index.module';
       formatError: (error: ApolloError|GraphQLError) => {
         return {
           code: error.extensions.code,
-          name: error.extensions?.response?.error || 'Internal Server',
+          name: error.extensions?.response?.error || error.extensions.code,
           message: error.extensions?.response?.message || [error.message]
         }
       }

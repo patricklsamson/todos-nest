@@ -38,7 +38,7 @@ import indexModule from './modules/index.module';
         port: +configService.get<number>('DB_PORT'),
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
-        database: configService.get('DB_NAME'),
+        database: configService.get('DB_DATABASE'),
         entities: indexEntity,
         synchronize: false,
       }),

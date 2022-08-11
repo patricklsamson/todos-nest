@@ -2,7 +2,7 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { TagDb } from '../tag/tag-db.entity';
 
-@Entity({ name: 'todos' })
+@Entity('todos')
 @ObjectType()
 export class TodoDb {
   @PrimaryGeneratedColumn({ type: 'bigint' })

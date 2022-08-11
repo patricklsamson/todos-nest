@@ -1,5 +1,12 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm';
 import { TagDb } from '../tag/tag-db.entity';
 
 @Entity('todos')
@@ -14,7 +21,7 @@ export class TodoDb {
   body: string;
 
   @Column({ type: 'boolean', default: false })
-  @Field(() => Boolean)
+  @Field()
   done: boolean;
 
   @OneToMany(
@@ -23,4 +30,12 @@ export class TodoDb {
   )
   @Field(() => [TagDb], { nullable: true })
   tags?: TagDb[];
+
+  @CreateDateColumn({ name: 'created_at' })
+  @Field()
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  @Field()
+  updatedAt: Date;
 }

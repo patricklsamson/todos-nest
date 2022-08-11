@@ -9,11 +9,11 @@ export class TodoDb {
   @Field(() => Int)
   id: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 255 })
   @Field()
   body: string;
 
-  @Column({ type: 'boolean' })
+  @Column({ type: 'boolean', default: false })
   @Field(() => Boolean)
   done: boolean;
 

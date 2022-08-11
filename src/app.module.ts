@@ -19,7 +19,7 @@ import indexModule from './modules/index.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), './schemas/schema.gql'),
-      path: 'gql',
+      path: 'v1/gql',
       debug: true,
       playground: true,
       formatError: (error: ApolloError|GraphQLError) => {
@@ -40,7 +40,7 @@ import indexModule from './modules/index.module';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: indexEntity,
-        synchronize: true,
+        synchronize: false,
       }),
       inject: [ConfigService],
     }),

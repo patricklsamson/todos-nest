@@ -1,5 +1,13 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm';
 import { TodoDb } from '../todo/todo-db.entity';
 
 @Entity('tags')
@@ -26,5 +34,14 @@ export class TagDb {
   todo: TodoDb;
 
   @Column({ name: 'todo_id', type: 'int' })
+  @Field(() => Int)
   todoId: number;
+
+  @CreateDateColumn({ name: 'created_at' })
+  @Field()
+  createdAt: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  @Field()
+  updatedAt: Date;
 }

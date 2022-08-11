@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import { join } from 'path';
-import { DataSource } from "typeorm";
+import { DataSource } from 'typeorm';
 
 dotenv.config();
 

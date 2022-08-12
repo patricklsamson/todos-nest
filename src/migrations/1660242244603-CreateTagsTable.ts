@@ -37,9 +37,9 @@ export class CreateTagsTable1660242244603 implements MigrationInterface {
     });
 
     private todoForeignKey: TableForeignKey = new TableForeignKey({
+        columnNames: ['todo_id'],
         referencedTableName: 'todos',
         referencedColumnNames: ['id'],
-        columnNames: ['todo_id'],
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
     });

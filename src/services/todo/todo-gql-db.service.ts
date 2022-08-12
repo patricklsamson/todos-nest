@@ -1,48 +1,48 @@
 import { Injectable } from "@nestjs/common";
 import { TodoDb } from '../../models/todo/todo-db.entity';
-import { IndexRepository } from "../../repositories/index.repository";
 import { CreateTodoInput } from '../../requests/todo/create-todo.input';
 import { UpdateTodoInput } from "../../requests/todo/update-todo.input";
+import { RepositoryService } from "../repository.service";
 
 @Injectable()
 export class TodoGqlDbService {
-  constructor(private repositoryIndex: IndexRepository) {}
+  constructor(private repositoryService: RepositoryService) {}
 
   findAllTodos(): Promise<TodoDb[]> {
-    return this.repositoryIndex.todoRepository.find({ relations: ['tags'] })
+    return this.repositoryService.todoRepository.find({ relations: ['tags'] })
   }
 
   findOneTodo(id: number): Promise<TodoDb> {
-    return this.repositoryIndex.todoRepository.findOne({
+    return this.repositoryService.todoRepository.findOne({
       where: { id: id },
       relations: ['tags']
     });
   }
 
   createTodo(todo: CreateTodoInput): Promise<TodoDb> {
-    const newTodo: CreateTodoInput = this.repositoryIndex.todoRepository.create(todo);
+    const newTodo: CreateTodoInput = this.repositoryService.todoRepository.create(todo);
 
-    return this.repositoryIndex.todoRepository.save(newTodo);
+    return this.repositoryService.todoRepository.save(newTodo);
   }
 
   async updateTodo(id: number, todo: UpdateTodoInput): Promise<TodoDb> {
-    await this.repositoryIndex.todoRepository.update(id, todo);
+    await this.repositoryService.todoRepository.update(id, todo);
 
-    return this.repositoryIndex.todoRepository.findOneBy({ id: id });
+    return this.repositoryService.todoRepository.findOneBy({ id: id });
   }
 
   async removeAllTodos(): Promise<boolean> {
-    const todos: TodoDb[] = await this.repositoryIndex.todoRepository.find();
+    const todos: TodoDb[] = await this.repositoryService.todoRepository.find();
 
-    todos.forEach(todo => this.repositoryIndex.todoRepository.remove(todo));
+    todos.forEach(todo => this.repositoryService.todoRepository.remove(todo));
 
     return true;
   }
 
   async removeOneTodo(id: number): Promise<boolean> {
-    const todo: TodoDb = await this.repositoryIndex.todoRepository.findOneBy({ id: id });
+    const todo: TodoDb = await this.repositoryService.todoRepository.findOneBy({ id: id });
 
-    this.repositoryIndex.todoRepository.remove(todo);
+    this.repositoryService.todoRepository.remove(todo);
 
     return true;
   }

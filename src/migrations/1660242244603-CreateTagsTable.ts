@@ -46,12 +46,20 @@ export class CreateTagsTable1660242244603 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(this.tagsTable);
-        await queryRunner.createForeignKey('tags', this.todoForeignKey);
+
+        await queryRunner.createForeignKey(
+            this.tagsTable.name,
+            this.todoForeignKey
+        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropTable(this.tagsTable);
-        await queryRunner.dropForeignKey('tags', this.todoForeignKey);
+
+        await queryRunner.dropForeignKey(
+            this.tagsTable.name,
+            this.todoForeignKey
+        );
     }
 
 }

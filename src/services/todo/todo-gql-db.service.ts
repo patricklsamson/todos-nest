@@ -20,7 +20,8 @@ export class TodoGqlDbService {
   }
 
   createTodo(todo: CreateTodoInput): Promise<TodoDb> {
-    const newTodo: CreateTodoInput = this.repositoryService.todoRepository.create(todo);
+    const newTodo: CreateTodoInput =
+      this.repositoryService.todoRepository.create(todo);
 
     return this.repositoryService.todoRepository.save(newTodo);
   }
@@ -40,7 +41,9 @@ export class TodoGqlDbService {
   }
 
   async removeOneTodo(id: number): Promise<boolean> {
-    const todo: TodoDb = await this.repositoryService.todoRepository.findOneBy({ id: id });
+    const todo: TodoDb = await this.repositoryService.todoRepository.findOneBy({
+      id: id
+    });
 
     this.repositoryService.todoRepository.remove(todo);
 

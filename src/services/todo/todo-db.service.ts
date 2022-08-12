@@ -20,7 +20,9 @@ export class TodoDbService {
   }
 
   create(todo: CreateTodoDto): Promise<TodoDb> {
-    const newTodo: CreateTodoDto = this.repositoryService.todoRepository.create(todo);
+    const newTodo: CreateTodoDto = this.repositoryService.todoRepository.create(
+      todo
+    );
 
     return this.repositoryService.todoRepository.save(newTodo);
   }
@@ -34,7 +36,9 @@ export class TodoDbService {
   async removeAll(): Promise<void> {
     const todos: TodoDb[] = await this.repositoryService.todoRepository.find();
 
-    todos.forEach(todo => this.repositoryService.todoRepository.delete(todo.id));
+    todos.forEach(todo => this.repositoryService.todoRepository.delete(
+      todo.id
+    ));
   }
 
   removeOne(id: number): void {

@@ -36,7 +36,10 @@ export class TagDbController {
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() tag: UpdateTagDto): Promise<TagDb> {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() tag: UpdateTagDto
+  ): Promise<TagDb> {
     return this.tagService.update(id, tag);
   }
 

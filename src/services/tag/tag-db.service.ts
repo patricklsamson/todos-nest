@@ -22,7 +22,9 @@ export class TagDbService {
   }
 
   create(tag: CreateTagDto): Promise<TagDb> {
-    const newTag: CreateTagDto = this.repositoryService.tagRepository.create(tag);
+    const newTag: CreateTagDto = this.repositoryService.tagRepository.create(
+      tag
+    );
 
     return this.repositoryService.tagRepository.save(newTag);
   }

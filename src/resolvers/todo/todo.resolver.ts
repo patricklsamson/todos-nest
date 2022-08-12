@@ -24,7 +24,10 @@ export class TodoNoDbResolver {
   }
 
   @Mutation(() => Todo)
-  updateTodo(@Args('id', ParseIntPipe) id: number, @Args('todo') todo: TodoInput): Todo {
+  updateTodo(
+    @Args('id', ParseIntPipe) id: number,
+    @Args('todo') todo: TodoInput
+  ): Todo {
     return this.todoService.updateTodo(id, todo);
   }
 

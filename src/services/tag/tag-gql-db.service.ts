@@ -22,7 +22,9 @@ export class TagGqlDbService {
   }
 
   createTag(tag: CreateTagInput): Promise<TagDb> {
-    const newTag: CreateTagInput = this.repositoryService.tagRepository.create(tag);
+    const newTag: CreateTagInput = this.repositoryService.tagRepository.create(
+      tag
+    );
 
     return this.repositoryService.tagRepository.save(newTag);
   }
@@ -42,7 +44,9 @@ export class TagGqlDbService {
   }
 
   async removeOneTag(id: number): Promise<boolean> {
-    const tag: TagDb = await this.repositoryService.tagRepository.findOneBy({ id: id });
+    const tag: TagDb = await this.repositoryService.tagRepository.findOneBy({
+      id: id
+    });
 
     this.repositoryService.tagRepository.remove(tag);
 

@@ -22,7 +22,7 @@ export class TagGqlService {
   }
 
   updateTag(id: number, tag: TagInput): Tag {
-    const index: number = this.tags.findIndex(todo => todo.id === id);
+    const index: number = this.tags.findIndex(tag => tag.id === id);
 
     const updatedTag: TagInput = {
       ...tag,

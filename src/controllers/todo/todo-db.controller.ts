@@ -36,7 +36,10 @@ export class TodoDbController {
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() todo: UpdateTodoDto): Promise<TodoDb> {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() todo: UpdateTodoDto
+  ): Promise<TodoDb> {
     return this.todoService.update(id, todo);
   }
 

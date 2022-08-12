@@ -29,12 +29,12 @@ export class TagDbResolver {
     return this.tagService.updateTag(tag.id, tag);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation()
   removeAllDbTags(): Promise<boolean> {
     return this.tagService.removeAllTags();
   }
 
-  @Mutation(() => Boolean)
+  @Mutation()
   removeOneDbTag(@Args('id', ParseIntPipe) id: number): Promise<boolean> {
     return this.tagService.removeOneTag(id);
   }

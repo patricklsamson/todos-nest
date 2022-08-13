@@ -44,25 +44,25 @@ export class TodoController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() todo: UpdateTodoDto
-  ): Todo {
-    const updatedTodo: Todo = this.todoService.update(id, todo);
+  ): Todo|boolean {
+    const updatedTodo: Todo|boolean = this.todoService.update(id, todo);
 
-    if (updatedTodo.id != id) throw new NotFoundException();
+    if (!updatedTodo) throw new NotFoundException();
 
     return updatedTodo;
   }
 
   @Delete()
-  removeAll(): boolean {
-    return this.todoService.removeAll();
+  removeAll(): object {
+    return { success: this.todoService.removeAll() };
   }
 
   @Delete(':id')
-  removeOne(@Param('id', ParseIntPipe) id: number): boolean {
+  removeOne(@Param('id', ParseIntPipe) id: number): object {
     const success: boolean = this.todoService.removeOne(id);
 
     if (!success) throw new NotFoundException();
 
-    return success;
+    return { success: true };
   }
 }

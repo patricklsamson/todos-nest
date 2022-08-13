@@ -31,7 +31,7 @@ export class TagDb {
   )
   @JoinColumn({ name: 'todo_id' })
   @Field(() => TodoDb, { nullable: true })
-  todo: TodoDb;
+  todo?: TodoDb;
 
   @Column({ name: 'todo_id', type: 'int' })
   @Field(() => Int)

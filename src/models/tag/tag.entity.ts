@@ -2,9 +2,9 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 export class Tag {
-  @Field(() => Int)
-  id: number;
+  @Field(() => Int, { nullable: true })
+  id?: number;
 
-  @Field()
-  name: string;
+  @Field({ nullable: true })
+  name?: string;
 }

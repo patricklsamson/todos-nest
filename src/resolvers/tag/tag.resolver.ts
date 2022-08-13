@@ -1,7 +1,8 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Tag } from '../../models/tag/tag.entity';
-import { TagInput } from '../../requests/tag/tag.input';
+import { CreateTagInput } from '../../requests/tag/create-tag.input';
+import { UpdateTagInput } from '../../requests/tag/update-tag.input';
 import { TagService } from '../../services/tag/tag.service';
 
 @Resolver(() => Tag)
@@ -19,16 +20,13 @@ export class TagResolver {
   }
 
   @Mutation(() => Tag)
-  createTag(@Args('tag') tag: TagInput): Tag {
+  createTag(@Args('tag') tag: CreateTagInput): Tag {
     return this.tagService.create(tag);
   }
 
   @Mutation(() => Tag)
-  updateTag(
-    @Args('id', ParseIntPipe) id: number,
-    @Args('tag') tag: TagInput
-  ): Tag {
-    return this.tagService.update(id, tag);
+  updateTag(@Args('tag') tag: UpdateTagInput): Tag {
+    return this.tagService.update(tag.id, tag);
   }
 
   @Mutation(() => Boolean)

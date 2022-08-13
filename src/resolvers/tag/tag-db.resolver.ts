@@ -1,7 +1,7 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { TagDb } from "../../models/tag/tag-db.entity";
-import { CreateTagInput } from '../../requests/tag/create-tag.input';
+import { CreateTagDbInput } from '../../requests/tag/create-tag-db.input';
 import { UpdateTagInput } from '../../requests/tag/update-tag.input';
 import { TagDbService } from '../../services/tag/tag-db.service';
 
@@ -20,7 +20,7 @@ export class TagDbResolver {
   }
 
   @Mutation(() => TagDb)
-  createDbTag(@Args('tag') tag: CreateTagInput): Promise<TagDb> {
+  createDbTag(@Args('tag') tag: CreateTagDbInput): Promise<TagDb> {
     return this.tagService.create(tag);
   }
 

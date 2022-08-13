@@ -31,12 +31,12 @@ export class TagNoDbResolver {
     return this.tagService.updateTag(id, tag);
   }
 
-  @Mutation()
+  @Mutation(() => Boolean)
   removeAllTags(): boolean {
     return this.tagService.removeAllTags();
   }
 
-  @Mutation()
+  @Mutation(() => Boolean)
   removeOneTag(@Args('id', ParseIntPipe) id: number): boolean {
     return this.tagService.removeOneTag(id);
   }

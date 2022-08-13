@@ -35,13 +35,17 @@ export class TodoDbService {
   async removeAll(): Promise<boolean> {
     const todos: TodoDb[] = await this.repositoryService.todoRepository.find();
 
-    todos.forEach(todo => this.repositoryService.todoRepository.delete(todo));
+    todos.forEach(todo => this.repositoryService.todoRepository.remove(todo));
 
     return true;
   }
 
   async removeOne(id: number): Promise<boolean> {
-    await this.repositoryService.todoRepository.delete(id);
+    const todo: TodoDb = await this.repositoryService.todoRepository.findOneBy({
+      id: id
+    });
+
+    await this.repositoryService.todoRepository.remove(todo);
 
     return true;
   }

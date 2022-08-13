@@ -12,7 +12,7 @@ import {
 import { TransformInterceptor } from '../../interceptors/transform.interceptor';
 import { TodoDb } from '../../models/todo/todo-db.entity';
 import { CreateTodoInput } from '../../requests/todo/create-todo.input';
-import { UpdateTodoInput } from '../../requests/todo/update-todo.input';
+import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
 import { TodoDbService } from '../../services/todo/todo-db.service';
 
 @Controller('db-todos')
@@ -38,7 +38,7 @@ export class TodoDbController {
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() todo: UpdateTodoInput
+    @Body() todo: UpdateTodoDto
   ): Promise<TodoDb> {
     return this.todoService.update(id, todo);
   }

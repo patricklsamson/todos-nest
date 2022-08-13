@@ -11,7 +11,8 @@ import {
 } from '@nestjs/common';
 import { TransformInterceptor } from '../../interceptors/transform.interceptor';
 import { Todo } from '../../models/todo/todo.entity';
-import { TodoInput } from '../../requests/todo/todo.input';
+import { CreateTodoInput } from '../../requests/todo/create-todo.input';
+import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
 import { TodoService } from '../../services/todo/todo.service';
 
 @Controller('todos')
@@ -30,12 +31,15 @@ export class TodoController {
   }
 
   @Post()
-  create(@Body() todo: TodoInput): Todo {
+  create(@Body() todo: CreateTodoInput): Todo {
     return this.todoService.create(todo);
   }
 
   @Put(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() todo: TodoInput): Todo {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() todo: UpdateTodoDto
+  ): Todo {
     return this.todoService.update(id, todo);
   }
 

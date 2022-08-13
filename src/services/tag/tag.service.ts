@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { Tag } from "../../models/tag/tag.entity";
-import { TagDto } from "../../requests/tag/tag.dto";
 import { TagInput } from "../../requests/tag/tag.input";
 
 @Injectable()
@@ -15,7 +14,7 @@ export class TagService {
     return this.tags.find(tag => tag.id === id);
   }
 
-  create(tag: TagDto|TagInput): Tag {
+  create(tag: TagInput): Tag {
     this.tags = [
       ...this.tags,
       { id: this.tags.length + 1, ...tag }
@@ -24,7 +23,7 @@ export class TagService {
     return tag;
   }
 
-  update(id: number, tag: TagDto|TagInput): Tag {
+  update(id: number, tag: TagInput): Tag {
     const index: number = this.tags.findIndex(tag => tag.id === id);
 
     const updatedTag: Tag = {

@@ -1,7 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { TagDb } from "../../models/tag/tag-db.entity";
 import { CreateTagDto } from "../../requests/tag/create-tag.dto";
+import { CreateTagInput } from "../../requests/tag/create-tag.input";
 import { UpdateTagDto } from "../../requests/tag/update-tag.dto";
+import { UpdateTagInput } from "../../requests/tag/update-tag.input";
 import { RepositoryService } from "../repository.service";
 
 @Injectable()
@@ -21,27 +23,30 @@ export class TagDbService {
     });
   }
 
-  create(tag: CreateTagDto): Promise<TagDb> {
-    const newTag: CreateTagDto = this.repositoryService.tagRepository.create(
-      tag
-    );
+  create(tag: CreateTagDto|CreateTagInput): Promise<TagDb> {
+    const newTag: CreateTagDto|CreateTagInput =
+      this.repositoryService.tagRepository.create(tag);
 
     return this.repositoryService.tagRepository.save(newTag);
   }
 
-  async update(id: number, tag: UpdateTagDto): Promise<TagDb> {
+  async update(id: number, tag: UpdateTagDto|UpdateTagInput): Promise<TagDb> {
     await this.repositoryService.tagRepository.update(id, tag);
 
     return this.repositoryService.tagRepository.findOneBy({ id: id });
   }
 
-  async removeAll(): Promise<void> {
+  async removeAll(): Promise<boolean> {
     const tags: TagDb[] = await this.repositoryService.tagRepository.find();
 
-    tags.forEach(tag => this.repositoryService.tagRepository.delete(tag.id));
+    tags.forEach(tag => this.repositoryService.tagRepository.delete(tag));
+
+    return true;
   }
 
-  removeOne(id: number): void {
-    this.repositoryService.tagRepository.delete(id);
+  async removeOne(id: number): Promise<boolean> {
+    await this.repositoryService.tagRepository.delete(id);
+
+    return true;
   }
 }

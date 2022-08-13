@@ -1,5 +1,6 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { UserInputError } from 'apollo-server-errors';
 import { Todo } from '../../models/todo/todo.entity';
 import { CreateTodoInput } from '../../requests/todo/create-todo.input';
 import { UpdateTodoInput } from '../../requests/todo/update-todo.input';
@@ -16,7 +17,11 @@ export class TodoResolver {
 
   @Query(() => Todo, { name: 'todo' })
   findOneTodo(@Args('id', ParseIntPipe) id: number): Todo {
-    return this.todoService.findOne(id);
+    const todo: Todo = this.todoService.findOne(id);
+
+    if (!todo) throw new UserInputError('Invalid argument');
+
+    return todo;
   }
 
   @Mutation(() => Todo)
@@ -25,8 +30,12 @@ export class TodoResolver {
   }
 
   @Mutation(() => Todo)
-  updateTodo(@Args('todo') todo: UpdateTodoInput): Todo {
-    return this.todoService.update(todo.id, todo);
+  updateTodo(@Args('todo') todo: UpdateTodoInput): Todo|boolean {
+    const updatedTodo: Todo|boolean = this.todoService.update(todo.id, todo);
+
+    if (!updatedTodo) throw new UserInputError('Invalid argument');
+
+    return updatedTodo;
   }
 
   @Mutation(() => Boolean)
@@ -36,6 +45,10 @@ export class TodoResolver {
 
   @Mutation(() => Boolean)
   removeOneTodo(@Args('id', ParseIntPipe) id: number): boolean {
-    return this.todoService.removeOne(id);
+    const success: boolean = this.todoService.removeOne(id);
+
+    if (!success) throw new UserInputError('Invalid argument');
+
+    return success;
   }
 }

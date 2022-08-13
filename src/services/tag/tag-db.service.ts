@@ -16,7 +16,7 @@ export class TagDbService {
   }
 
   findOne(id: number): Promise<TagDb> {
-    return this.repositoryService.tagRepository.findOne({
+    return this.repositoryService.tagRepository.findOneOrFail({
       where: { id: id },
       relations: ['todo']
     });
@@ -32,7 +32,7 @@ export class TagDbService {
   async update(id: number, tag: UpdateTagDto|UpdateTagInput): Promise<TagDb> {
     await this.repositoryService.tagRepository.update(id, tag);
 
-    return this.repositoryService.tagRepository.findOneBy({ id: id });
+    return this.repositoryService.tagRepository.findOneByOrFail({ id: id });
   }
 
   async removeAll(): Promise<boolean> {
@@ -44,9 +44,8 @@ export class TagDbService {
   }
 
   async removeOne(id: number): Promise<boolean> {
-    const tag: TagDb = await this.repositoryService.tagRepository.findOneBy({
-      id: id
-    });
+    const tag: TagDb =
+      await this.repositoryService.tagRepository.findOneByOrFail({ id: id });
 
     await this.repositoryService.tagRepository.remove(tag);
 

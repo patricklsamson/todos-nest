@@ -2,25 +2,25 @@ import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Todo } from '../../models/todo/todo.entity';
 import { TodoInput } from '../../requests/todo/todo.input';
-import { TodoGqlService } from '../../services/todo/todo-gql.service';
+import { TodoService } from '../../services/todo/todo.service';
 
 @Resolver(() => Todo)
-export class TodoNoDbResolver {
-  constructor(private todoService: TodoGqlService) {}
+export class TodoResolver {
+  constructor(private todoService: TodoService) {}
 
   @Query(() => [Todo], { name: 'todos' })
   findAllTodos(): Todo[] {
-    return this.todoService.findAllTodos();
+    return this.todoService.findAll();
   }
 
   @Query(() => Todo, { name: 'todo' })
   findOneTodo(@Args('id', ParseIntPipe) id: number): Todo {
-    return this.todoService.findOneTodo(id);
+    return this.todoService.findOne(id);
   }
 
   @Mutation(() => Todo)
   createTodo(@Args('todo') todo: TodoInput): Todo {
-    return this.todoService.createTodo(todo);
+    return this.todoService.create(todo);
   }
 
   @Mutation(() => Todo)
@@ -28,16 +28,16 @@ export class TodoNoDbResolver {
     @Args('id', ParseIntPipe) id: number,
     @Args('todo') todo: TodoInput
   ): Todo {
-    return this.todoService.updateTodo(id, todo);
+    return this.todoService.update(id, todo);
   }
 
   @Mutation(() => Boolean)
   removeAllTodos(): boolean {
-    return this.todoService.removeAllTodos();
+    return this.todoService.removeAll();
   }
 
   @Mutation(() => Boolean)
   removeOneTodo(@Args('id', ParseIntPipe) id: number): boolean {
-    return this.todoService.removeOneTodo(id);
+    return this.todoService.removeOne(id);
   }
 }

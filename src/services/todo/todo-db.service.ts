@@ -14,7 +14,7 @@ export class TodoDbService {
   }
 
   findOne(id: number): Promise<TodoDb> {
-    return this.repositoryService.todoRepository.findOne({
+    return this.repositoryService.todoRepository.findOneOrFail({
       where: { id: id },
       relations: ['tags']
     });
@@ -33,7 +33,7 @@ export class TodoDbService {
   ): Promise<TodoDb> {
     await this.repositoryService.todoRepository.update(id, todo);
 
-    return this.repositoryService.todoRepository.findOneBy({ id: id });
+    return this.repositoryService.todoRepository.findOneByOrFail({ id: id });
   }
 
   async removeAll(): Promise<boolean> {
@@ -45,9 +45,8 @@ export class TodoDbService {
   }
 
   async removeOne(id: number): Promise<boolean> {
-    const todo: TodoDb = await this.repositoryService.todoRepository.findOneBy({
-      id: id
-    });
+    const todo: TodoDb =
+      await this.repositoryService.todoRepository.findOneByOrFail({ id: id });
 
     await this.repositoryService.todoRepository.remove(todo);
 

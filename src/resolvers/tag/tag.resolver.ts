@@ -1,5 +1,6 @@
 import { ParseIntPipe } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { UserInputError } from 'apollo-server-errors';
 import { Tag } from '../../models/tag/tag.entity';
 import { CreateTagInput } from '../../requests/tag/create-tag.input';
 import { UpdateTagInput } from '../../requests/tag/update-tag.input';
@@ -16,7 +17,11 @@ export class TagResolver {
 
   @Query(() => Tag, { name: 'tag' })
   findOneTag(@Args('id', ParseIntPipe) id: number): Tag {
-    return this.tagService.findOne(id);
+    const tag: Tag = this.tagService.findOne(id);
+
+    if (!tag) throw new UserInputError('Invalid argument');
+
+    return tag;
   }
 
   @Mutation(() => Tag)
@@ -25,8 +30,12 @@ export class TagResolver {
   }
 
   @Mutation(() => Tag)
-  updateTag(@Args('tag') tag: UpdateTagInput): Tag {
-    return this.tagService.update(tag.id, tag);
+  updateTag(@Args('tag') tag: UpdateTagInput): Tag|boolean {
+    const updatedTodo: Tag|boolean = this.tagService.update(tag.id, tag);
+
+    if (!updatedTodo) throw new UserInputError('Invalid argument');
+
+    return updatedTodo;
   }
 
   @Mutation(() => Boolean)
@@ -36,6 +45,10 @@ export class TagResolver {
 
   @Mutation(() => Boolean)
   removeOneTag(@Args('id', ParseIntPipe) id: number): boolean {
-    return this.tagService.removeOne(id);
+    const success: boolean = this.tagService.removeOne(id);
+
+    if (!success) throw new UserInputError('Invalid argument');
+
+    return success;
   }
 }

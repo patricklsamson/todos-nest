@@ -31,12 +31,12 @@ export class TodoNoDbResolver {
     return this.todoService.updateTodo(id, todo);
   }
 
-  @Mutation()
+  @Mutation(() => Boolean)
   removeAllTodos(): boolean {
     return this.todoService.removeAllTodos();
   }
 
-  @Mutation()
+  @Mutation(() => Boolean)
   removeOneTodo(@Args('id', ParseIntPipe) id: number): boolean {
     return this.todoService.removeOneTodo(id);
   }

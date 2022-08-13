@@ -40,12 +40,12 @@ export class TodoController {
   }
 
   @Delete()
-  removeAll(): void {
-    this.todoService.removeAll();
+  removeAll(): boolean {
+    return this.todoService.removeAll();
   }
 
   @Delete(':id')
-  removeOne(@Param('id', ParseIntPipe) id: number): void {
-    this.todoService.removeOne(id);
+  removeOne(@Param('id', ParseIntPipe) id: number): boolean {
+    return this.todoService.removeOne(id);
   }
 }

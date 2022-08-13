@@ -44,12 +44,12 @@ export class TodoDbController {
   }
 
   @Delete()
-  removeAll(): void {
-    this.todoService.removeAll();
+  removeAll(): Promise<boolean> {
+    return this.todoService.removeAll();
   }
 
   @Delete(':id')
-  removeOne(@Param('id', ParseIntPipe) id: number): void {
-    this.todoService.removeOne(id);
+  removeOne(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
+    return this.todoService.removeOne(id);
   }
 }

@@ -26,14 +26,14 @@ type TagDb {
 }
 
 type Tag {
-  id: Int!
-  name: String!
+  id: Int
+  name: String
 }
 
 type Todo {
-  id: Int!
-  body: String!
-  done: Boolean!
+  id: Int
+  body: String
+  done: Boolean
 }
 
 type Query {
@@ -48,25 +48,25 @@ type Query {
 }
 
 type Mutation {
-  createDbTag(tag: CreateTagInput!): TagDb!
+  createDbTag(tag: CreateTagDbInput!): TagDb!
   updateDbTag(tag: UpdateTagInput!): TagDb!
   removeAllDbTags: Boolean!
   removeOneDbTag(id: Float!): Boolean!
-  createTag(tag: TagInput!): Tag!
-  updateTag(id: Float!, tag: TagInput!): Tag!
+  createTag(tag: CreateTagInput!): Tag!
+  updateTag(tag: UpdateTagInput!): Tag!
   removeAllTags: Boolean!
   removeOneTag(id: Float!): Boolean!
   createDbTodo(todo: CreateTodoInput!): TodoDb!
   updateDbTodo(todo: UpdateTodoInput!): TodoDb!
   removeAllDbTodos: Boolean!
   removeOneDbTodo(id: Float!): Boolean!
-  createTodo(todo: TodoInput!): Todo!
-  updateTodo(id: Float!, todo: TodoInput!): Todo!
+  createTodo(todo: CreateTodoInput!): Todo!
+  updateTodo(todo: UpdateTodoInput!): Todo!
   removeAllTodos: Boolean!
   removeOneTodo(id: Float!): Boolean!
 }
 
-input CreateTagInput {
+input CreateTagDbInput {
   name: String!
   todoId: Int!
 }
@@ -77,8 +77,7 @@ input UpdateTagInput {
   id: Int!
 }
 
-input TagInput {
-  id: Int!
+input CreateTagInput {
   name: String!
 }
 
@@ -91,10 +90,4 @@ input UpdateTodoInput {
   body: String
   done: Boolean
   id: Int!
-}
-
-input TodoInput {
-  id: Int!
-  body: String!
-  done: Boolean!
 }

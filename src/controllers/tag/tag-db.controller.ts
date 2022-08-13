@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { TransformInterceptor } from '../../interceptors/transform.interceptor';
 import { TagDb } from '../../models/tag/tag-db.entity';
-import { CreateTagInput } from '../../requests/tag/create-tag.input';
-import { UpdateTagInput } from '../../requests/tag/update-tag.input';
+import { CreateTagDbInput } from '../../requests/tag/create-tag-db.input';
+import { UpdateTagDto } from '../../requests/tag/update-tag.dto';
 import { TagDbService } from '../../services/tag/tag-db.service';
 
 @Controller('db-tags')
@@ -31,14 +31,14 @@ export class TagDbController {
   }
 
   @Post()
-  create(@Body() tag: CreateTagInput): Promise<TagDb> {
+  create(@Body() tag: CreateTagDbInput): Promise<TagDb> {
     return this.tagService.create(tag);
   }
 
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() tag: UpdateTagInput
+    @Body() tag: UpdateTagDto
   ): Promise<TagDb> {
     return this.tagService.update(id, tag);
   }

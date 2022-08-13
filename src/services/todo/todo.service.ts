@@ -24,9 +24,12 @@ export class TodoService {
     return newTodo;
   }
 
-  update(id: number, todo: UpdateTodoDto|UpdateTodoInput): Todo {
+  update(id: number, todo: UpdateTodoDto|UpdateTodoInput): Todo|boolean {
     const index: number = this.todos.findIndex(todo => todo.id === id);
-    const updatedTodo: Todo = { id: index, ...todo };
+
+    if (index === -1) return false;
+
+    const updatedTodo: Todo = { id, ...todo };
 
     this.todos[index] = updatedTodo;
 
@@ -40,9 +43,9 @@ export class TodoService {
   }
 
   removeOne(id: number): boolean {
-    this.todos = this.todos.filter(todo => todo.id !== id);
-
     if (this.todos.findIndex(todo => todo.id === id) === -1) return false;
+
+    this.todos = this.todos.filter(todo => todo.id !== id);
 
     return true;
   }

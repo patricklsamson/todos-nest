@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { TagDb } from "../../models/tag/tag-db.entity";
-import { CreateTagInput } from "../../requests/tag/create-tag.input";
+import { CreateTagDbInput } from "../../requests/tag/create-tag-db.input";
+import { UpdateTagDto } from "../../requests/tag/update-tag.dto";
 import { UpdateTagInput } from "../../requests/tag/update-tag.input";
 import { RepositoryService } from "../repository.service";
 
@@ -21,14 +22,14 @@ export class TagDbService {
     });
   }
 
-  create(tag: CreateTagInput): Promise<TagDb> {
-    const newTag: CreateTagInput =
+  create(tag: CreateTagDbInput): Promise<TagDb> {
+    const newTag: CreateTagDbInput =
       this.repositoryService.tagRepository.create(tag);
 
     return this.repositoryService.tagRepository.save(newTag);
   }
 
-  async update(id: number, tag: UpdateTagInput): Promise<TagDb> {
+  async update(id: number, tag: UpdateTagDto|UpdateTagInput): Promise<TagDb> {
     await this.repositoryService.tagRepository.update(id, tag);
 
     return this.repositoryService.tagRepository.findOneBy({ id: id });

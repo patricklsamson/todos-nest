@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -27,7 +28,11 @@ export class TagController {
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number):Tag {
-    return this.tagService.findOne(id);
+    const tag: Tag = this.tagService.findOne(id);
+
+    if (!tag) throw new NotFoundException();
+
+    return tag;
   }
 
   @Post()
@@ -40,7 +45,11 @@ export class TagController {
     @Param('id', ParseIntPipe) id: number,
     @Body() tag: UpdateTagDto
   ): Tag {
-    return this.tagService.update(id, tag);
+    const updatedTag: Tag = this.tagService.update(id, tag);
+
+    if (updatedTag.id != id) throw new NotFoundException();
+
+    return updatedTag;
   }
 
   @Delete()
@@ -50,6 +59,10 @@ export class TagController {
 
   @Delete(':id')
   removeOne(@Param('id', ParseIntPipe) id: number): boolean {
-    return this.tagService.removeOne(id);
+    const success: boolean = this.tagService.removeOne(id);
+
+    if (!success) throw new NotFoundException();
+
+    return success;
   }
 }

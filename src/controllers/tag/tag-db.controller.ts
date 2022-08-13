@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -26,8 +27,12 @@ export class TagDbController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<TagDb> {
-    return this.tagService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<TagDb> {
+    try {
+      return await this.tagService.findOne(id);
+    } catch (err) {
+      throw new NotFoundException(err.message);
+    }
   }
 
   @Post()
@@ -36,11 +41,15 @@ export class TagDbController {
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() tag: UpdateTagDto
   ): Promise<TagDb> {
-    return this.tagService.update(id, tag);
+    try {
+      return await this.tagService.update(id, tag);
+    } catch (err) {
+      throw new NotFoundException(err.message);
+    }
   }
 
   @Delete()
@@ -49,7 +58,11 @@ export class TagDbController {
   }
 
   @Delete(':id')
-  removeOne(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
-    return this.tagService.removeOne(id);
+  async removeOne(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
+    try {
+      return await this.tagService.removeOne(id);
+    } catch (err) {
+      throw new NotFoundException(err.message);
+    }
   }
 }

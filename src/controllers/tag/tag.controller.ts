@@ -44,25 +44,25 @@ export class TagController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() tag: UpdateTagDto
-  ): Tag {
-    const updatedTag: Tag = this.tagService.update(id, tag);
+  ): Tag|boolean {
+    const updatedTag: Tag|boolean = this.tagService.update(id, tag);
 
-    if (updatedTag.id != id) throw new NotFoundException();
+    if (!updatedTag) throw new NotFoundException();
 
     return updatedTag;
   }
 
   @Delete()
-  removeAll(): boolean {
-    return this.tagService.removeAll();
+  removeAll(): object {
+    return { success: this.tagService.removeAll() };
   }
 
   @Delete(':id')
-  removeOne(@Param('id', ParseIntPipe) id: number): boolean {
+  removeOne(@Param('id', ParseIntPipe) id: number): object {
     const success: boolean = this.tagService.removeOne(id);
 
     if (!success) throw new NotFoundException();
 
-    return success;
+    return { success: true };
   }
 }

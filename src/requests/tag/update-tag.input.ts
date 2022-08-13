@@ -1,9 +1,9 @@
 import { Field, InputType, Int, PartialType } from "@nestjs/graphql";
 import { IsNotEmpty, IsNumber } from "class-validator";
-import { CreateTagInput } from "./create-tag.input";
+import { CreateTagDbInput } from "./create-tag-db.input";
 
 @InputType()
-export class UpdateTagInput extends PartialType(CreateTagInput) {
+export class UpdateTagInput extends PartialType(CreateTagDbInput) {
   @Field(() => Int)
   @IsNumber()
   @IsNotEmpty()

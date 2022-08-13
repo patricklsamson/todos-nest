@@ -1,4 +1,12 @@
-import { PartialType } from "@nestjs/mapped-types";
-import { CreateTagDbInput } from "./create-tag-db.input";
+import { IsNumber, IsOptional, IsString, Length } from "class-validator";
 
-export class UpdateTagDto extends PartialType(CreateTagDbInput) {}
+export class UpdateTagDto {
+  @IsString()
+  @Length(5, 50)
+  @IsOptional()
+  name?: string;
+
+  @IsNumber()
+  @IsOptional()
+  todoId?: number;
+}

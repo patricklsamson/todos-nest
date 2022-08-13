@@ -24,9 +24,12 @@ export class TagService {
     return newTag;
   }
 
-  update(id: number, tag: UpdateTagDto|UpdateTagInput): Tag {
+  update(id: number, tag: UpdateTagDto|UpdateTagInput): Tag|boolean {
     const index: number = this.tags.findIndex(tag => tag.id === id);
-    const updatedTag: Tag = { id: index, ...tag };
+
+    if (index === -1) return false;
+
+    const updatedTag: Tag = { id, ...tag };
 
     this.tags[index] = updatedTag;
 
@@ -40,9 +43,9 @@ export class TagService {
   }
 
   removeOne(id: number): boolean {
-    this.tags = this.tags.filter(tag => tag.id !== id);
-
     if (this.tags.findIndex(tag => tag.id === id) === -1) return false;
+
+    this.tags = this.tags.filter(tag => tag.id !== id);
 
     return true;
   }

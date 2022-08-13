@@ -40,12 +40,12 @@ export class TagController {
   }
 
   @Delete()
-  removeAll(): void {
-    this.tagService.removeAll();
+  removeAll(): boolean {
+    return this.tagService.removeAll();
   }
 
   @Delete(':id')
-  removeOne(@Param('id', ParseIntPipe) id: number): void {
-    this.tagService.removeOne(id);
+  removeOne(@Param('id', ParseIntPipe) id: number): boolean {
+    return this.tagService.removeOne(id);
   }
 }

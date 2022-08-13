@@ -44,12 +44,12 @@ export class TagDbController {
   }
 
   @Delete()
-  removeAll(): void {
-    this.tagService.removeAll();
+  removeAll(): Promise<boolean> {
+    return this.tagService.removeAll();
   }
 
   @Delete(':id')
-  removeOne(@Param('id', ParseIntPipe) id: number): void {
-    this.tagService.removeOne(id);
+  removeOne(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
+    return this.tagService.removeOne(id);
   }
 }

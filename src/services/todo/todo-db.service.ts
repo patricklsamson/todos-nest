@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { TodoDb } from '../../models/todo/todo-db.entity';
-import { CreateTodoDto } from '../../requests/todo/create-todo.dto';
 import { CreateTodoInput } from '../../requests/todo/create-todo.input';
-import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
 import { UpdateTodoInput } from '../../requests/todo/update-todo.input';
 import { RepositoryService } from '../repository.service';
 
@@ -21,17 +19,14 @@ export class TodoDbService {
     });
   }
 
-  create(todo: CreateTodoDto|CreateTodoInput): Promise<TodoDb> {
-    const newTodo: CreateTodoDto|CreateTodoInput =
+  create(todo: CreateTodoInput): Promise<TodoDb> {
+    const newTodo: CreateTodoInput =
       this.repositoryService.todoRepository.create(todo);
 
     return this.repositoryService.todoRepository.save(newTodo);
   }
 
-  async update(
-    id: number,
-    todo: UpdateTodoDto|UpdateTodoInput
-  ): Promise<TodoDb> {
+  async update(id: number, todo: UpdateTodoInput): Promise<TodoDb> {
     await this.repositoryService.todoRepository.update(id, todo);
 
     return this.repositoryService.todoRepository.findOneBy({ id: id });

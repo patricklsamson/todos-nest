@@ -37,13 +37,17 @@ export class TagDbService {
   async removeAll(): Promise<boolean> {
     const tags: TagDb[] = await this.repositoryService.tagRepository.find();
 
-    tags.forEach(tag => this.repositoryService.tagRepository.delete(tag));
+    tags.forEach(tag => this.repositoryService.tagRepository.remove(tag));
 
     return true;
   }
 
   async removeOne(id: number): Promise<boolean> {
-    await this.repositoryService.tagRepository.delete(id);
+    const tag: TagDb = await this.repositoryService.tagRepository.findOneBy({
+      id: id
+    });
+
+    await this.repositoryService.tagRepository.remove(tag);
 
     return true;
   }

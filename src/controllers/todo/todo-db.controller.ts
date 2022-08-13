@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -26,8 +27,12 @@ export class TodoDbController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<TodoDb> {
-    return this.todoService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<TodoDb> {
+    try {
+      return await this.todoService.findOne(id);
+    } catch (err) {
+      throw new NotFoundException(err.message);
+    }
   }
 
   @Post()
@@ -36,11 +41,15 @@ export class TodoDbController {
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() todo: UpdateTodoDto
   ): Promise<TodoDb> {
-    return this.todoService.update(id, todo);
+    try {
+      return await this.todoService.update(id, todo);
+    } catch (err) {
+      throw new NotFoundException(err.message);
+    }
   }
 
   @Delete()
@@ -49,7 +58,11 @@ export class TodoDbController {
   }
 
   @Delete(':id')
-  removeOne(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
-    return this.todoService.removeOne(id);
+  async removeOne(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
+    try {
+      return await this.todoService.removeOne(id);
+    } catch (err) {
+      throw new NotFoundException(err.message);
+    }
   }
 }

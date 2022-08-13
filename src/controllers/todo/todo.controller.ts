@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -27,7 +28,11 @@ export class TodoController {
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number):Todo {
-    return this.todoService.findOne(id);
+    const todo: Todo = this.todoService.findOne(id);
+
+    if (!todo) throw new NotFoundException();
+
+    return todo;
   }
 
   @Post()
@@ -40,7 +45,11 @@ export class TodoController {
     @Param('id', ParseIntPipe) id: number,
     @Body() todo: UpdateTodoDto
   ): Todo {
-    return this.todoService.update(id, todo);
+    const updatedTodo: Todo = this.todoService.update(id, todo);
+
+    if (updatedTodo.id != id) throw new NotFoundException();
+
+    return updatedTodo;
   }
 
   @Delete()
@@ -50,6 +59,10 @@ export class TodoController {
 
   @Delete(':id')
   removeOne(@Param('id', ParseIntPipe) id: number): boolean {
-    return this.todoService.removeOne(id);
+    const success: boolean = this.todoService.removeOne(id);
+
+    if (!success) throw new NotFoundException();
+
+    return success;
   }
 }

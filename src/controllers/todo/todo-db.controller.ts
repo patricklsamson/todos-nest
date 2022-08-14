@@ -8,36 +8,37 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  UseInterceptors
+  // UseInterceptors
 } from '@nestjs/common';
-import { TransformInterceptor } from '../../interceptors/transform.interceptor';
+// import { TransformInterceptor } from '../../interceptors/transform.interceptor';
 import { TodoDb } from '../../models/todo/todo-db.entity';
 import { CreateTodoInput } from '../../requests/todo/create-todo.input';
 import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
+import { TodoSerializer } from '../../serializers/todo.serializer';
 import { TodoDbService } from '../../services/todo/todo-db.service';
 
 @Controller('db-todos')
-@UseInterceptors(TransformInterceptor)
+// @UseInterceptors(TransformInterceptor)
 export class TodoDbController {
   constructor(private todoService: TodoDbService) {}
 
   @Get()
-  findAll(): Promise<TodoDb[]> {
-    return this.todoService.findAll();
+  async findAll(): Promise<TodoDb[]> {
+    return TodoSerializer.serialize(await this.todoService.findAll());
   }
 
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<TodoDb> {
     try {
-      return await this.todoService.findOne(id);
+      return TodoSerializer.serialize(await this.todoService.findOne(id));
     } catch (err) {
       throw new NotFoundException(err.message);
     }
   }
 
   @Post()
-  create(@Body() todo: CreateTodoInput): Promise<TodoDb> {
-    return this.todoService.create(todo);
+  async create(@Body() todo: CreateTodoInput): Promise<TodoDb> {
+    return TodoSerializer.serialize(await this.todoService.create(todo));
   }
 
   @Put(':id')
@@ -46,7 +47,7 @@ export class TodoDbController {
     @Body() todo: UpdateTodoDto
   ): Promise<TodoDb> {
     try {
-      return await this.todoService.update(id, todo);
+      return TodoSerializer.serialize(await this.todoService.update(id, todo));
     } catch (err) {
       throw new NotFoundException(err.message);
     }

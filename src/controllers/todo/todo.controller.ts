@@ -8,22 +8,23 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  UseInterceptors
+  // UseInterceptors
 } from '@nestjs/common';
-import { TransformInterceptor } from '../../interceptors/transform.interceptor';
+// import { TransformInterceptor } from '../../interceptors/transform.interceptor';
 import { Todo } from '../../models/todo/todo.entity';
 import { CreateTodoInput } from '../../requests/todo/create-todo.input';
 import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
+import { TodoSerializer } from '../../serializers/todo.serializer';
 import { TodoService } from '../../services/todo/todo.service';
 
 @Controller('todos')
-@UseInterceptors(TransformInterceptor)
+// @UseInterceptors(TransformInterceptor)
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
   @Get()
   findAll(): Todo[] {
-    return this.todoService.findAll();
+    return TodoSerializer.serialize(this.todoService.findAll());
   }
 
   @Get(':id')
@@ -32,12 +33,12 @@ export class TodoController {
 
     if (!todo) throw new NotFoundException();
 
-    return todo;
+    return TodoSerializer.serialize(todo);
   }
 
   @Post()
   create(@Body() todo: CreateTodoInput): Todo {
-    return this.todoService.create(todo);
+    return TodoSerializer.serialize(this.todoService.create(todo));
   }
 
   @Put(':id')
@@ -49,7 +50,7 @@ export class TodoController {
 
     if (!updatedTodo) throw new NotFoundException();
 
-    return updatedTodo;
+    return TodoSerializer.serialize(updatedTodo);
   }
 
   @Delete()

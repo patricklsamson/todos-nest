@@ -8,36 +8,37 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  UseInterceptors
+  // UseInterceptors
 } from '@nestjs/common';
-import { TransformInterceptor } from '../../interceptors/transform.interceptor';
+// import { TransformInterceptor } from '../../interceptors/transform.interceptor';
 import { TagDb } from '../../models/tag/tag-db.entity';
 import { CreateTagDbInput } from '../../requests/tag/create-tag-db.input';
 import { UpdateTagDto } from '../../requests/tag/update-tag.dto';
+import { TagSerializer } from '../../serializers/tag.serializer';
 import { TagDbService } from '../../services/tag/tag-db.service';
 
 @Controller('db-tags')
-@UseInterceptors(TransformInterceptor)
+// @UseInterceptors(TransformInterceptor)
 export class TagDbController {
   constructor(private tagService: TagDbService) {}
 
   @Get()
-  findAll(): Promise<TagDb[]> {
-    return this.tagService.findAll();
+  async findAll(): Promise<TagDb[]> {
+    return TagSerializer.serialize(await this.tagService.findAll());
   }
 
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<TagDb> {
     try {
-      return await this.tagService.findOne(id);
+      return TagSerializer.serialize(await this.tagService.findOne(id));
     } catch (err) {
       throw new NotFoundException(err.message);
     }
   }
 
   @Post()
-  create(@Body() tag: CreateTagDbInput): Promise<TagDb> {
-    return this.tagService.create(tag);
+  async create(@Body() tag: CreateTagDbInput): Promise<TagDb> {
+    return TagSerializer.serialize(await this.tagService.create(tag));
   }
 
   @Put(':id')
@@ -46,7 +47,7 @@ export class TagDbController {
     @Body() tag: UpdateTagDto
   ): Promise<TagDb> {
     try {
-      return await this.tagService.update(id, tag);
+      return TagSerializer.serialize(await this.tagService.update(id, tag));
     } catch (err) {
       throw new NotFoundException(err.message);
     }

@@ -8,22 +8,23 @@ import {
   ParseIntPipe,
   Post,
   Put,
-  UseInterceptors
+  // UseInterceptors
 } from '@nestjs/common';
-import { TransformInterceptor } from '../../interceptors/transform.interceptor';
+// import { TransformInterceptor } from '../../interceptors/transform.interceptor';
 import { Tag } from '../../models/tag/tag.entity';
 import { CreateTagInput } from '../../requests/tag/create-tag.input';
 import { UpdateTagDto } from '../../requests/tag/update-tag.dto';
+import { TagSerializer } from '../../serializers/tag.serializer';
 import { TagService } from '../../services/tag/tag.service';
 
 @Controller('tags')
-@UseInterceptors(TransformInterceptor)
+// @UseInterceptors(TransformInterceptor)
 export class TagController {
   constructor(private tagService: TagService) {}
 
   @Get()
   findAll(): Tag[] {
-    return this.tagService.findAll();
+    return TagSerializer.serialize(this.tagService.findAll());
   }
 
   @Get(':id')

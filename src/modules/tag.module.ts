@@ -7,6 +7,7 @@ import { TagDbResolver } from "../resolvers/tag/tag-db.resolver";
 import { TagResolver } from "../resolvers/tag/tag.resolver";
 import { TagDbService } from "../services/tag/tag-db.service";
 import { TagService } from "../services/tag/tag.service";
+import { TagGqlDbService } from '../services/tag/tag-gql-db.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature(indexEntity)],
@@ -14,8 +15,9 @@ import { TagService } from "../services/tag/tag.service";
   providers: [
     TagDbResolver,
     TagDbService,
+    TagGqlDbService,
     TagResolver,
-    TagService
+    TagService,
   ]
 })
 export class TagModule {}

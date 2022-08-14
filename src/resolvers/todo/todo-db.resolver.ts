@@ -3,11 +3,11 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TodoDb } from '../../models/todo/todo-db.entity';
 import { CreateTodoInput } from '../../requests/todo/create-todo.input';
 import { UpdateTodoInput } from '../../requests/todo/update-todo.input';
-import { TodoDbService } from '../../services/todo/todo-db.service';
+import { TodoGqlDbService } from '../../services/todo/todo-gql-db.service';
 
 @Resolver(() => TodoDb)
 export class TodoDbResolver {
-  constructor(private todoService: TodoDbService) {}
+  constructor(private todoService: TodoGqlDbService) {}
 
   @Query(() => [TodoDb], { name: 'dbTodos' })
   findAllDbTodos(): Promise<TodoDb[]> {

@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -14,7 +13,6 @@ import {
 import { TodoDb } from '../../models/todo/todo-db.entity';
 import { CreateTodoInput } from '../../requests/todo/create-todo.input';
 import { UpdateTodoDto } from '../../requests/todo/update-todo.dto';
-import { TodoSerializer } from '../../serializers/todo.serializer';
 import { TodoDbService } from '../../services/todo/todo-db.service';
 
 @Controller('db-todos')
@@ -23,47 +21,35 @@ export class TodoDbController {
   constructor(private todoService: TodoDbService) {}
 
   @Get()
-  async findAll(): Promise<TodoDb[]> {
-    return TodoSerializer.serialize(await this.todoService.findAll());
+  findAll(): Promise<TodoDb[]> {
+    return this.todoService.findAll();
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<TodoDb> {
-    try {
-      return TodoSerializer.serialize(await this.todoService.findOne(id));
-    } catch (err) {
-      throw new NotFoundException(err.message);
-    }
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<TodoDb> {
+    return this.todoService.findOne(id);
   }
 
   @Post()
-  async create(@Body() todo: CreateTodoInput): Promise<TodoDb> {
-    return TodoSerializer.serialize(await this.todoService.create(todo));
+  create(@Body() todo: CreateTodoInput): Promise<TodoDb> {
+    return this.todoService.create(todo);
   }
 
   @Put(':id')
-  async update(
+  update(
     @Param('id', ParseIntPipe) id: number,
     @Body() todo: UpdateTodoDto
   ): Promise<TodoDb> {
-    try {
-      return TodoSerializer.serialize(await this.todoService.update(id, todo));
-    } catch (err) {
-      throw new NotFoundException(err.message);
-    }
+    return this.todoService.update(id, todo);
   }
 
   @Delete()
-  removeAll(): Promise<boolean> {
+  removeAll(): Promise<object> {
     return this.todoService.removeAll();
   }
 
   @Delete(':id')
-  async removeOne(@Param('id', ParseIntPipe) id: number): Promise<boolean> {
-    try {
-      return await this.todoService.removeOne(id);
-    } catch (err) {
-      throw new NotFoundException(err.message);
-    }
+  removeOne(@Param('id', ParseIntPipe) id: number): Promise<object> {
+    return this.todoService.removeOne(id);
   }
 }

@@ -7,6 +7,7 @@ import { TodoDbResolver } from '../resolvers/todo/todo-db.resolver';
 import { TodoResolver } from '../resolvers/todo/todo.resolver';
 import { TodoDbService } from '../services/todo/todo-db.service';
 import { TodoService } from '../services/todo/todo.service';
+import { TodoGqlDbService } from '../services/todo/todo-gql-db.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature(indexEntity)],
@@ -14,8 +15,9 @@ import { TodoService } from '../services/todo/todo.service';
   providers: [
     TodoDbResolver,
     TodoDbService,
+    TodoGqlDbService,
     TodoResolver,
-    TodoService
+    TodoService,
   ]
 })
 export class TodoModule {}

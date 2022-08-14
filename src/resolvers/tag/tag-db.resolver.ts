@@ -3,11 +3,11 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { TagDb } from "../../models/tag/tag-db.entity";
 import { CreateTagDbInput } from '../../requests/tag/create-tag-db.input';
 import { UpdateTagInput } from '../../requests/tag/update-tag.input';
-import { TagDbService } from '../../services/tag/tag-db.service';
+import { TagGqlDbService } from '../../services/tag/tag-gql-db.service';
 
 @Resolver(() => TagDb)
 export class TagDbResolver {
-  constructor(private tagService: TagDbService) {}
+  constructor(private tagService: TagGqlDbService) {}
 
   @Query(() => [TagDb], { name: 'dbTags' })
   findAllDbTags(): Promise<TagDb[]> {
